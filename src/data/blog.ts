@@ -858,6 +858,693 @@ ContentForge AI had 47 production bugs in the first month. Each one taught me so
 If you're considering a similar pivot: the path from engineering to AI is shorter than you think, and the foundations you already have are more valuable than you realise.
     `,
   },
+  {
+    slug: "deploying-fullstack-saas-free-supabase-render-vercel",
+    title: "Deploying a Full-Stack SaaS for Free: Supabase + Render + Vercel",
+    excerpt:
+      "How I deployed CanopyCare — a production Node.js + React booking system — at zero monthly cost using Supabase for PostgreSQL, Render for the backend, Vercel for the frontend, and Cloudflare for the custom subdomain.",
+    category: "SaaS Dev",
+    tags: ["Deployment", "Supabase", "Render", "Vercel", "Cloudflare", "Node.js", "DevOps"],
+    date: "2026-04-05",
+    readTime: 9,
+    featured: false,
+    coverGradient: "from-[#0a2010] via-[#0f3520] to-[#051008]",
+    icon: "🚀",
+    content: `
+## The Zero-Cost Stack
+
+When I deployed CanopyCare — a full booking SaaS with auth, photo uploads, email notifications, and an admin panel — I did it without spending a penny. Here's the exact stack:
+
+| Service | Purpose | Free Tier |
+|---------|---------|-----------|
+| Supabase | PostgreSQL DB | 500MB, 50K MAU |
+| Render | Node.js backend | 750 hrs/month |
+| Vercel | React frontend | Unlimited deploys |
+| Cloudflare | Subdomain DNS | Free |
+| Cloudinary | Photo storage | 25GB |
+| Resend | Transactional email | 3K/month |
+
+## Step 1 — Database: Supabase
+
+Supabase gives you a full PostgreSQL database with a connection string you can use directly with Prisma:
+
+\`\`\`bash
+# .env
+DATABASE_URL="postgresql://postgres.xxxx:password@aws-eu-west-1.pooler.supabase.com:5432/postgres"
+DIRECT_URL="postgresql://postgres.xxxx:password@aws-eu-west-1.pooler.supabase.com:5432/postgres"
+\`\`\`
+
+\`\`\`prisma
+// schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+\`\`\`
+
+Run migrations pointing directly at Supabase:
+
+\`\`\`bash
+DATABASE_URL="your_supabase_url" npx prisma migrate deploy
+\`\`\`
+
+## Step 2 — Backend: Render
+
+Render auto-detects Node.js. The key settings:
+
+- **Build command:** \`npm install && npx prisma generate\`
+- **Start command:** \`node src/server.js\`
+- **Instance type:** Free
+
+Critical: move \`prisma\` from \`devDependencies\` to \`dependencies\` — Render's production build skips dev deps:
+
+\`\`\`bash
+npm install prisma --save
+git add package.json && git commit -m "fix: prisma to dependencies" && git push
+\`\`\`
+
+Your backend will be live at \`https://your-app.onrender.com\`. Note: free tier spins down after 15 mins of inactivity — first request takes ~30s to wake up.
+
+## Step 3 — Frontend: Vercel
+
+Vercel auto-detects Vite. Add one environment variable:
+
+\`\`\`
+VITE_API_URL = https://your-backend.onrender.com/api
+\`\`\`
+
+For client-side routing (React Router), add a \`vercel.json\` at the root:
+
+\`\`\`json
+{"rewrites":[{"source":"/(.*)", "destination":"/index.html"}]}
+\`\`\`
+
+Without this, direct URL access to \`/register\`, \`/dashboard\` etc. returns 404.
+
+## Step 4 — Custom Domain: Cloudflare Subdomain
+
+If you own a domain on Cloudflare, you can create a free subdomain pointing to Vercel:
+
+\`\`\`
+Type: CNAME
+Name: canopycare
+Value: [your-vercel-cname].vercel-dns.com
+Proxy: OFF (grey cloud)
+\`\`\`
+
+Then add the subdomain in Vercel → Settings → Domains.
+
+## CORS Configuration
+
+The most common production bug: your backend CORS only allows the Vercel URL but you've added a custom domain. Always keep \`FRONTEND_URL\` updated on Render:
+
+\`\`\`javascript
+// app.js
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+}))
+\`\`\`
+
+## Total Monthly Cost: £0
+
+The entire CanopyCare stack — database, backend API, frontend, photo storage, email — runs completely free. For a portfolio project or early-stage startup, this is all you need.
+    `,
+  },
+  {
+    slug: "building-agentic-booking-system-langgraph-whatsapp",
+    title: "Building an Agentic Booking System with LangGraph & Twilio WhatsApp",
+    excerpt:
+      "A deep dive into BookingForge AI — a multi-tenant agentic booking SaaS where a LangGraph agent handles the entire booking flow over WhatsApp, from intent detection to slot confirmation.",
+    category: "AI/ML",
+    tags: ["LangGraph", "Twilio", "WhatsApp", "FastAPI", "Agents", "Multi-tenant"],
+    date: "2026-04-08",
+    readTime: 14,
+    featured: false,
+    coverGradient: "from-[#0f2027] via-[#1a3a4a] to-[#051015]",
+    icon: "🤖",
+    content: `
+## Why WhatsApp for Bookings?
+
+Most UK small businesses still take bookings by phone or email. WhatsApp has 2 billion users — building a booking agent that lives in WhatsApp means zero friction for customers. No app download, no account creation. Just message and book.
+
+## The Architecture
+
+\`\`\`
+Customer WhatsApp → Twilio → FastAPI Webhook → LangGraph Agent → Supabase
+                                                      ↓
+                                              Twilio → WhatsApp Reply
+\`\`\`
+
+## LangGraph Agent Design
+
+The booking agent uses a state machine with 5 nodes:
+
+\`\`\`python
+from langgraph.graph import StateGraph, END
+from typing import TypedDict, Optional
+
+class BookingState(TypedDict):
+    phone: str
+    tenant_id: str
+    messages: list
+    intent: Optional[str]
+    service: Optional[str]
+    date: Optional[str]
+    slot_id: Optional[int]
+    confirmed: bool
+
+def build_booking_graph():
+    graph = StateGraph(BookingState)
+    
+    graph.add_node("detect_intent", detect_intent_node)
+    graph.add_node("collect_service", collect_service_node)
+    graph.add_node("show_slots", show_slots_node)
+    graph.add_node("confirm_booking", confirm_booking_node)
+    graph.add_node("handle_cancel", handle_cancel_node)
+    
+    graph.set_entry_point("detect_intent")
+    
+    graph.add_conditional_edges("detect_intent", route_intent, {
+        "book": "collect_service",
+        "cancel": "handle_cancel",
+        "unknown": END,
+    })
+    
+    graph.add_edge("collect_service", "show_slots")
+    graph.add_edge("show_slots", "confirm_booking")
+    graph.add_edge("confirm_booking", END)
+    
+    return graph.compile()
+\`\`\`
+
+## Intent Detection Node
+
+\`\`\`python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+async def detect_intent_node(state: BookingState) -> BookingState:
+    last_msg = state["messages"][-1]
+    
+    result = await llm.ainvoke([
+        {"role": "system", "content": """
+            Classify the user's intent as one of: book, cancel, unknown.
+            Reply with just the intent word.
+        """},
+        {"role": "user", "content": last_msg}
+    ])
+    
+    state["intent"] = result.content.strip().lower()
+    return state
+\`\`\`
+
+## Twilio WhatsApp Webhook
+
+\`\`\`python
+from fastapi import FastAPI, Form
+from twilio.rest import Client
+
+app = FastAPI()
+twilio_client = Client(TWILIO_SID, TWILIO_TOKEN)
+
+@app.post("/webhook/whatsapp")
+async def whatsapp_webhook(
+    From: str = Form(...),
+    Body: str = Form(...),
+    To: str = Form(...),
+):
+    phone = From.replace("whatsapp:", "")
+    tenant_id = get_tenant_from_number(To)
+    
+    # Get or create conversation state
+    state = await get_conversation_state(phone, tenant_id)
+    state["messages"].append(Body)
+    
+    # Run the agent
+    agent = build_booking_graph()
+    new_state = await agent.ainvoke(state)
+    
+    # Save state for next message
+    await save_conversation_state(phone, tenant_id, new_state)
+    
+    # Send reply
+    reply = generate_reply(new_state)
+    twilio_client.messages.create(
+        from_=To,
+        to=From,
+        body=reply
+    )
+    
+    return {"status": "ok"}
+\`\`\`
+
+## Multi-Tenancy
+
+Each business gets their own WhatsApp number via Twilio. The \`To\` field in the webhook identifies which tenant the message is for:
+
+\`\`\`python
+def get_tenant_from_number(whatsapp_number: str) -> str:
+    number = whatsapp_number.replace("whatsapp:", "")
+    tenant = db.query(Tenant).filter(
+        Tenant.whatsapp_number == number
+    ).first()
+    return tenant.id if tenant else None
+\`\`\`
+
+## Conversation State Persistence
+
+Between messages, state is stored in Redis:
+
+\`\`\`python
+import redis
+import json
+
+redis_client = redis.from_url(REDIS_URL)
+
+async def get_conversation_state(phone: str, tenant_id: str) -> BookingState:
+    key = f"conv:{tenant_id}:{phone}"
+    data = redis_client.get(key)
+    if data:
+        return json.loads(data)
+    return BookingState(phone=phone, tenant_id=tenant_id, messages=[], confirmed=False)
+
+async def save_conversation_state(phone: str, tenant_id: str, state: BookingState):
+    key = f"conv:{tenant_id}:{phone}"
+    redis_client.setex(key, 3600, json.dumps(state))  # 1hr TTL
+\`\`\`
+
+## Example Conversation
+
+\`\`\`
+Customer: Hi, I want to book a canopy clean
+Agent: Hi! I'd love to help you book. What type of service do you need?
+       1. Basic Clean (£89)
+       2. Commercial Package (£149)
+       3. Deep Clean Pro (£249)
+
+Customer: 2
+Agent: Great choice! Here are available slots this week:
+       • Mon 14 Apr - 9:00 AM
+       • Tue 15 Apr - 2:00 PM
+       • Wed 16 Apr - 11:00 AM
+       Reply with your preferred slot number.
+
+Customer: 1
+Agent: Perfect! Confirming your booking:
+       Service: Commercial Package (£149)
+       Date: Monday 14 April, 9:00 AM
+       Reply YES to confirm or NO to cancel.
+
+Customer: YES
+Agent: ✅ Booking confirmed! Reference: CC-2026-0042
+       You'll receive a reminder 24 hours before your appointment.
+\`\`\`
+
+BookingForge AI is currently in active development — the WhatsApp agent is live in testing with 2 pilot businesses.
+    `,
+  },
+  {
+    slug: "windows-server-2022-active-directory-vmware",
+    title: "Setting Up Windows Server 2022 Active Directory on VMware Workstation",
+    excerpt:
+      "A complete walkthrough of my CN5009 WBL project: deploying a virtualised enterprise IT infrastructure with Windows Server 2022 Domain Controller, Windows 10 client, and Ubuntu LAMP server on VMware Workstation Pro 17.",
+    category: "Web Dev",
+    tags: ["VMware", "Windows Server 2022", "Active Directory", "Ubuntu", "LAMP", "DNS", "DHCP"],
+    date: "2026-03-20",
+    readTime: 11,
+    featured: false,
+    coverGradient: "from-[#0a0f20] via-[#10182e] to-[#050810]",
+    icon: "🖥️",
+    content: `
+## Project Overview
+
+For my CN5009 Work-Based Learning placement at the University of East London, I built a complete virtualised enterprise IT infrastructure. The setup mirrors a real small business network:
+
+- **WIN-DC01** — Windows Server 2022 Domain Controller (192.168.1.10)
+- **WIN-CLIENT01** — Windows 10 workstation joined to domain
+- **UBUNTU-WEB01** — Ubuntu 22.04 LAMP server (192.168.1.30)
+- **Domain:** project.local
+- **Network:** VMnet1 (Host-only, 192.168.1.0/24)
+
+## VMware Network Configuration
+
+All VMs use **Host-Only** networking on VMnet1. This creates an isolated network with no internet access — perfect for a lab environment.
+
+\`\`\`
+VMnet1: 192.168.1.0/24 (Host-only)
+├── WIN-DC01:      192.168.1.10 (static)
+├── WIN-CLIENT01:  192.168.1.20 (static)
+└── UBUNTU-WEB01:  192.168.1.30 (static)
+\`\`\`
+
+## Step 1 — Windows Server 2022 Setup
+
+After installing Windows Server 2022, set a static IP:
+
+\`\`\`powershell
+# Set static IP
+New-NetIPAddress -InterfaceAlias "Ethernet0" `
+  -IPAddress 192.168.1.10 `
+  -PrefixLength 24 `
+  -DefaultGateway 192.168.1.1
+
+# Set DNS to itself (DC will be its own DNS)
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" `
+  -ServerAddresses 192.168.1.10
+
+# Rename the server
+Rename-Computer -NewName "WIN-DC01" -Restart
+\`\`\`
+
+## Step 2 — Install Active Directory Domain Services
+
+\`\`\`powershell
+# Install AD DS role
+Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
+
+# Promote to Domain Controller
+Import-Module ADDSDeployment
+Install-ADDSForest `
+  -DomainName "project.local" `
+  -DomainNetbiosName "PROJECT" `
+  -ForestMode "WinThreshold" `
+  -DomainMode "WinThreshold" `
+  -InstallDns:$true `
+  -SafeModeAdministratorPassword (ConvertTo-SecureString "P@ssword123!" -AsPlainText -Force) `
+  -Force:$true
+\`\`\`
+
+Server will restart automatically and become the DC for project.local.
+
+## Step 3 — Configure DNS & DHCP
+
+\`\`\`powershell
+# Install DHCP
+Install-WindowsFeature -Name DHCP -IncludeManagementTools
+
+# Create DHCP scope
+Add-DhcpServerv4Scope `
+  -Name "project.local scope" `
+  -StartRange 192.168.1.100 `
+  -EndRange 192.168.1.200 `
+  -SubnetMask 255.255.255.0
+
+# Set DHCP options (DNS and gateway)
+Set-DhcpServerv4OptionValue `
+  -DnsServer 192.168.1.10 `
+  -Router 192.168.1.1
+
+# Authorise DHCP in AD
+Add-DhcpServerInDC -DnsName "WIN-DC01.project.local"
+\`\`\`
+
+## Step 4 — Create AD Users and OUs
+
+\`\`\`powershell
+# Create OUs
+New-ADOrganizationalUnit -Name "Staff" -Path "DC=project,DC=local"
+New-ADOrganizationalUnit -Name "IT" -Path "DC=project,DC=local"
+New-ADOrganizationalUnit -Name "Computers" -Path "DC=project,DC=local"
+
+# Create users
+New-ADUser `
+  -Name "Hassan Mithun" `
+  -GivenName "Hassan" `
+  -Surname "Mithun" `
+  -SamAccountName "hmithun" `
+  -UserPrincipalName "hmithun@project.local" `
+  -Path "OU=IT,DC=project,DC=local" `
+  -AccountPassword (ConvertTo-SecureString "P@ssword123!" -AsPlainText -Force) `
+  -Enabled $true
+
+# Add to Domain Admins
+Add-ADGroupMember -Identity "Domain Admins" -Members "hmithun"
+\`\`\`
+
+## Step 5 — Join Windows 10 Client to Domain
+
+On WIN-CLIENT01, set DNS to point at the DC:
+
+\`\`\`powershell
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" -ServerAddresses 192.168.1.10
+\`\`\`
+
+Then join the domain:
+
+\`\`\`powershell
+Add-Computer -DomainName "project.local" `
+  -Credential (Get-Credential) `
+  -Restart
+\`\`\`
+
+Log in with \`PROJECT\\hmithun\` and domain credentials work across the network.
+
+## Step 6 — Ubuntu LAMP Server
+
+\`\`\`bash
+# Install LAMP stack
+sudo apt update
+sudo apt install apache2 mysql-server php php-mysql -y
+
+# Set static IP
+sudo nano /etc/netplan/00-installer-config.yaml
+\`\`\`
+
+\`\`\`yaml
+network:
+  version: 2
+  ethernets:
+    ens33:
+      addresses: [192.168.1.30/24]
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [192.168.1.10]
+\`\`\`
+
+\`\`\`bash
+sudo netplan apply
+
+# Test connectivity
+ping WIN-DC01.project.local  # Should resolve via AD DNS
+\`\`\`
+
+## Lessons Learned
+
+1. **BSOD during AD promotion** — caused by insufficient RAM. Minimum 2GB for Server 2022 — give it 4GB.
+2. **DNS is everything** — if DNS fails, nothing works. Always point clients at the DC for DNS first.
+3. **Snapshot before promotion** — take a VMware snapshot before promoting to DC. Reverting a misconfigured DC is painful.
+4. **Host-only vs NAT** — use Host-only for isolated lab networks. NAT gives internet but breaks domain resolution.
+
+The full lab logs are documented in my CN5009 WBL placement report.
+    `,
+  },
+  {
+    slug: "oracle-sql-plsql-fleet-management-system",
+    title: "Building a Fleet Management System with Oracle SQL & PL/SQL",
+    excerpt:
+      "How I designed and built SuperRides RTFMS — a real-time fleet management system for a ride-hailing company using Oracle SQL, complex triggers, stored procedures, and a fully normalised 3NF schema.",
+    category: "Data Science",
+    tags: ["Oracle SQL", "PL/SQL", "Triggers", "Stored Procedures", "ERD", "Normalisation"],
+    date: "2026-03-01",
+    readTime: 10,
+    featured: false,
+    coverGradient: "from-[#0f1a0a] via-[#1a2d10] to-[#050a05]",
+    icon: "🛢️",
+    content: `
+## Project Overview
+
+SuperRides RTFMS (Real-Time Fleet Management System) is a database-driven system for managing a ride-hailing company's operations. Built for CN5000, it handles drivers, vehicles, bookings, payments, and real-time trip tracking.
+
+## Database Schema Design
+
+The schema has 8 tables in 3NF (Third Normal Form):
+
+\`\`\`sql
+-- Core tables
+CREATE TABLE drivers (
+    driver_id    NUMBER PRIMARY KEY,
+    name         VARCHAR2(100) NOT NULL,
+    license_no   VARCHAR2(20) UNIQUE NOT NULL,
+    phone        VARCHAR2(15),
+    status       VARCHAR2(10) DEFAULT 'AVAILABLE'
+                 CHECK (status IN ('AVAILABLE','BUSY','OFFLINE')),
+    rating       NUMBER(3,2) DEFAULT 5.0,
+    created_at   DATE DEFAULT SYSDATE
+);
+
+CREATE TABLE vehicles (
+    vehicle_id   NUMBER PRIMARY KEY,
+    driver_id    NUMBER REFERENCES drivers(driver_id),
+    reg_number   VARCHAR2(10) UNIQUE NOT NULL,
+    make         VARCHAR2(50),
+    model        VARCHAR2(50),
+    year         NUMBER(4),
+    vehicle_type VARCHAR2(20) CHECK (vehicle_type IN ('STANDARD','PREMIUM','XL'))
+);
+
+CREATE TABLE bookings (
+    booking_id     NUMBER PRIMARY KEY,
+    customer_id    NUMBER REFERENCES customers(customer_id),
+    driver_id      NUMBER REFERENCES drivers(driver_id),
+    vehicle_id     NUMBER REFERENCES vehicles(vehicle_id),
+    pickup_loc     VARCHAR2(200) NOT NULL,
+    dropoff_loc    VARCHAR2(200) NOT NULL,
+    booking_time   TIMESTAMP DEFAULT SYSTIMESTAMP,
+    status         VARCHAR2(15) DEFAULT 'PENDING'
+                   CHECK (status IN ('PENDING','CONFIRMED','IN_PROGRESS','COMPLETED','CANCELLED')),
+    fare           NUMBER(8,2),
+    distance_km    NUMBER(6,2)
+);
+\`\`\`
+
+## Sequences and Auto-Increment
+
+Oracle doesn't have AUTO_INCREMENT — use sequences:
+
+\`\`\`sql
+CREATE SEQUENCE driver_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE booking_seq START WITH 1000 INCREMENT BY 1;
+
+-- Use in insert
+INSERT INTO drivers (driver_id, name, license_no)
+VALUES (driver_seq.NEXTVAL, 'John Smith', 'DL123456');
+\`\`\`
+
+## Triggers
+
+### Auto-update driver status on booking
+
+\`\`\`sql
+CREATE OR REPLACE TRIGGER trg_booking_driver_status
+AFTER INSERT ON bookings
+FOR EACH ROW
+BEGIN
+    IF :NEW.status = 'CONFIRMED' THEN
+        UPDATE drivers
+        SET status = 'BUSY'
+        WHERE driver_id = :NEW.driver_id;
+    END IF;
+END;
+/
+\`\`\`
+
+### Auto-calculate fare on trip completion
+
+\`\`\`sql
+CREATE OR REPLACE TRIGGER trg_calculate_fare
+BEFORE UPDATE ON bookings
+FOR EACH ROW
+WHEN (NEW.status = 'COMPLETED')
+DECLARE
+    v_rate NUMBER;
+BEGIN
+    SELECT rate_per_km INTO v_rate
+    FROM vehicle_rates
+    WHERE vehicle_type = (
+        SELECT vehicle_type FROM vehicles
+        WHERE vehicle_id = :NEW.vehicle_id
+    );
+    
+    :NEW.fare := :NEW.distance_km * v_rate;
+    
+    -- Free driver after completion
+    UPDATE drivers SET status = 'AVAILABLE'
+    WHERE driver_id = :NEW.driver_id;
+END;
+/
+\`\`\`
+
+## Stored Procedures
+
+### Assign nearest available driver
+
+\`\`\`sql
+CREATE OR REPLACE PROCEDURE assign_driver(
+    p_booking_id IN NUMBER,
+    p_vehicle_type IN VARCHAR2
+) AS
+    v_driver_id NUMBER;
+    v_vehicle_id NUMBER;
+BEGIN
+    -- Find available driver with matching vehicle type
+    SELECT d.driver_id, v.vehicle_id
+    INTO v_driver_id, v_vehicle_id
+    FROM drivers d
+    JOIN vehicles v ON d.driver_id = v.driver_id
+    WHERE d.status = 'AVAILABLE'
+    AND v.vehicle_type = p_vehicle_type
+    AND ROWNUM = 1
+    ORDER BY d.rating DESC;
+    
+    -- Assign to booking
+    UPDATE bookings
+    SET driver_id = v_driver_id,
+        vehicle_id = v_vehicle_id,
+        status = 'CONFIRMED'
+    WHERE booking_id = p_booking_id;
+    
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Driver ' || v_driver_id || ' assigned to booking ' || p_booking_id);
+    
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No available drivers for vehicle type: ' || p_vehicle_type);
+        ROLLBACK;
+END assign_driver;
+/
+\`\`\`
+
+## Complex Analytical Queries
+
+### Revenue report by driver and vehicle type
+
+\`\`\`sql
+SELECT 
+    d.name AS driver_name,
+    v.vehicle_type,
+    COUNT(b.booking_id) AS total_trips,
+    ROUND(SUM(b.fare), 2) AS total_revenue,
+    ROUND(AVG(b.fare), 2) AS avg_fare,
+    ROUND(AVG(b.distance_km), 1) AS avg_distance,
+    ROUND(AVG(d.rating), 2) AS driver_rating
+FROM bookings b
+JOIN drivers d ON b.driver_id = d.driver_id
+JOIN vehicles v ON b.vehicle_id = v.vehicle_id
+WHERE b.status = 'COMPLETED'
+AND b.booking_time >= ADD_MONTHS(SYSDATE, -1)
+GROUP BY d.name, v.vehicle_type
+HAVING COUNT(b.booking_id) >= 5
+ORDER BY total_revenue DESC;
+\`\`\`
+
+### Peak hours analysis
+
+\`\`\`sql
+SELECT 
+    TO_CHAR(booking_time, 'HH24') AS hour_of_day,
+    COUNT(*) AS booking_count,
+    ROUND(AVG(fare), 2) AS avg_fare,
+    RANK() OVER (ORDER BY COUNT(*) DESC) AS peak_rank
+FROM bookings
+WHERE status != 'CANCELLED'
+GROUP BY TO_CHAR(booking_time, 'HH24')
+ORDER BY booking_count DESC;
+\`\`\`
+
+## Key Lessons
+
+1. **Triggers fire for every row** — keep them lightweight. Heavy logic belongs in stored procedures.
+2. **COMMIT inside procedures** — always commit explicitly. Oracle doesn't auto-commit like MySQL.
+3. **EXCEPTION blocks are mandatory** — \`NO_DATA_FOUND\` will crash your procedure without them.
+4. **Use ROWNUM carefully** — \`ROWNUM = 1\` must be used before ORDER BY, or wrap in a subquery.
+5. **3NF saves you later** — a well-normalised schema makes complex joins trivial.
+
+The full SuperRides schema, all triggers, stored procedures, and test data are in my CN5000 coursework submission.
+    `,
+  },
 ]
 
 export const categories = ["All", "AI/ML", "SaaS Dev", "Data Science", "Career", "Web Dev"]
