@@ -37,7 +37,20 @@ export default function Skills() {
               transition: "border-color 0.25s",
             }}
           >
-            <div style={{ fontSize: "1.8rem", marginBottom: "0.5rem" }}>{skill.icon}</div>
+            <div style={{ marginBottom: "0.6rem", display: "flex", justifyContent: "center" }}>
+              <img
+                src={skill.icon}
+                alt={skill.name}
+                width={44}
+                height={44}
+                style={{
+                  objectFit: "contain",
+                  filter: ["React / Next.js", "Railway / Vercel", "Prisma / Supabase"].includes(skill.name)
+                    ? "invert(1)"
+                    : "none",
+                }}
+              />
+            </div>
             <div
               style={{
                 fontFamily: "'Syne', sans-serif",

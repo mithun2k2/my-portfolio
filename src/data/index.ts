@@ -132,22 +132,22 @@ export const projects = [
 ]
 
 export const skills = [
-  { icon: "🐍", name: "Python", level: "Advanced", pct: 90 },
-  { icon: "⚛️", name: "React / Next.js", level: "Advanced", pct: 88 },
-  { icon: "⚡", name: "FastAPI", level: "Advanced", pct: 85 },
-  { icon: "🤖", name: "LangGraph / LangChain", level: "Advanced", pct: 85 },
-  { icon: "🗄️", name: "PostgreSQL", level: "Intermediate", pct: 78 },
-  { icon: "🔐", name: "Auth0 / Stripe", level: "Intermediate", pct: 80 },
-  { icon: "🗃️", name: "Prisma / Supabase", level: "Advanced", pct: 82 },
-  { icon: "☁️", name: "Railway / Vercel", level: "Advanced", pct: 88 },
-  { icon: "📊", name: "Power BI / DAX", level: "Intermediate", pct: 72 },
-  { icon: "🧠", name: "ML / YOLOv8", level: "Intermediate", pct: 75 },
-  { icon: "📦", name: "Docker / CI-CD", level: "Intermediate", pct: 68 },
-  { icon: "☕", name: "Java", level: "Intermediate", pct: 70 },
-  { icon: "🗂️", name: "TypeScript", level: "Advanced", pct: 83 },
-  { icon: "🛡️", name: "Prisma ORM", level: "Advanced", pct: 82 },
-  { icon: "📡", name: "WebSocket / SSE", level: "Intermediate", pct: 76 },
-  { icon: "🖼️", name: "HTML / CSS", level: "Advanced", pct: 90 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", name: "Python", level: "Advanced", pct: 90 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", name: "React / Next.js", level: "Advanced", pct: 88 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg", name: "FastAPI", level: "Advanced", pct: 85 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", name: "LangGraph / LangChain", level: "Advanced", pct: 85 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", name: "PostgreSQL", level: "Intermediate", pct: 78 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg", name: "Auth0 / Stripe", level: "Intermediate", pct: 80 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg", name: "Prisma / Supabase", level: "Advanced", pct: 82 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg", name: "Railway / Vercel", level: "Advanced", pct: 88 },
+  { icon: "https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg", name: "Power BI / DAX", level: "Intermediate", pct: 72 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg", name: "ML / YOLOv8", level: "Intermediate", pct: 75 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", name: "Docker / CI-CD", level: "Intermediate", pct: 68 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", name: "Java", level: "Intermediate", pct: 70 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", name: "TypeScript", level: "Advanced", pct: 83 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", name: "React", level: "Advanced", pct: 88 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", name: "Node.js", level: "Intermediate", pct: 76 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", name: "HTML / CSS", level: "Advanced", pct: 90 },
 ]
 
 export const timeline = [
