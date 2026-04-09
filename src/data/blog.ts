@@ -787,6 +787,8 @@ Total monthly cost: **£0**
 The full source is split across two repos — canopycare-backend and canopycare-frontend on GitHub.
     `,
   },
+  {
+    slug: "from-engineering-to-ai-career-pivot",
     title: "From Electrical Engineering to AI SaaS: My Career Pivot Story",
     excerpt:
       "How I transitioned from a BEng in Electrical Engineering at KUET to building production AI SaaS products in London — the skills that transferred, the gaps I had to fill, and what I'd do differently.",
