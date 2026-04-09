@@ -53,7 +53,7 @@ export const projects = [
   },
   {
     id: "videoforge",
-    emoji: "https://upload.wikimedia.org/wikipedia/commons/3/36/RunwayML_logo.png",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
     gradient: "from-[#1f0a0a] to-[#3d1515]",
     title: "VideoForge AI",
     status: "building" as const,
