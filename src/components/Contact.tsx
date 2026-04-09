@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 
 const contactLinks = [
-  { label: "mithun_2k2@yahoo.co.uk", href: "mailto:mithun_2k2@yahoo.co.uk", icon: "✉️", primary: true },
+  { label: "hello@mhassanmithun.com", href: "mailto:hello@mhassanmithun.com", icon: "✉️", primary: true },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/mahmudul-hassan-9725226a/", icon: "💼", primary: false },
   { label: "GitHub", href: "https://github.com/mithun2k2", icon: "⌥", primary: false },
   { label: "Portfolio", href: "https://mhassanmithun.com", icon: "🌐", primary: false },
