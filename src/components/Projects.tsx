@@ -119,8 +119,9 @@ export default function Projects() {
                       height={64}
                       style={{
                         objectFit: "contain",
-                        filter: ["Enterprise Headless SaaS"].includes(project.title) ? "invert(1)" : "none",
-                        dropShadow: "0 8px 32px rgba(0,0,0,0.4)",
+                        filter: ["Enterprise Headless SaaS"].includes(project.title)
+                          ? "invert(1) drop-shadow(0 8px 32px rgba(0,0,0,0.4))"
+                          : "drop-shadow(0 8px 32px rgba(0,0,0,0.4))",
                       }}
                     />
                   </motion.div>
