@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 
 const contactLinks = [
   { label: "mithun_2k2@yahoo.co.uk", href: "mailto:mithun_2k2@yahoo.co.uk", icon: "✉️", primary: true },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/mahmudul-hassan-9725226a/", icon: "💼", primary: false },
   { label: "GitHub", href: "https://github.com/mithun2k2", icon: "⌥", primary: false },
   { label: "Portfolio", href: "https://mhassanmithun.com", icon: "🌐", primary: false },
   { label: "+44 7732 504855", href: "tel:+447732504855", icon: "📞", primary: false },
@@ -106,6 +107,7 @@ export default function Contact() {
           >
             {[
               { label: "Email", href: "mailto:mithun_2k2@yahoo.co.uk" },
+              { label: "LinkedIn", href: "https://www.linkedin.com/in/mahmudul-hassan-9725226a/" },
               { label: "GitHub", href: "https://github.com/mithun2k2" },
               { label: "ContentForge AI", href: "https://contentforge.net" },
               { label: "Portfolio", href: "https://mhassanmithun.com" },

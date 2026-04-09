@@ -137,6 +137,23 @@ export default function Hero() {
             >
               GitHub ↗
             </motion.a>
+            <motion.a
+              href="/Hassan_CV_2026.pdf"
+              download="Hassan_CV_2026.pdf"
+              whileHover={{ borderColor: "var(--accent2)", y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                border: "1px solid var(--accent2)",
+                color: "var(--accent2)",
+                padding: "0.75rem 1.8rem",
+                borderRadius: 10,
+                fontWeight: 600,
+                fontSize: "0.9rem",
+                transition: "border-color 0.2s",
+              }}
+            >
+              ↓ Download CV
+            </motion.a>
           </motion.div>
         </div>
 
