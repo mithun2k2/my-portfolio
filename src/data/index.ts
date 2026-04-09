@@ -73,8 +73,8 @@ export const projects = [
     statusLabel: "Academic",
     desc: "Real-time traffic management system using YOLOv8 object detection. Achieved 94% accuracy on custom traffic dataset with vehicle counting, congestion detection, and adaptive signal control logic.",
     tags: ["YOLOv8", "Python", "OpenCV", "PyTorch", "Computer Vision", "CUDA"],
-    link: "https://heartdiseasepredictorknn.streamlit.app",
-    linkLabel: "heartdiseasepredictorknn.streamlit.app",
+    link: null,
+    linkLabel: null,
     github: "https://github.com/mithun2k2",
   },
   {
@@ -99,8 +99,8 @@ export const projects = [
     statusLabel: "Academic",
     desc: "ML pipeline for heart disease prediction (CN5021). KNN, linear regression, and Bayesian classifier comparison with full EDA, feature engineering, and cross-validation on genomic dataset.",
     tags: ["Python", "scikit-learn", "KNN", "Pandas", "Matplotlib", "Seaborn", "Bayesian"],
-    link: null,
-    linkLabel: null,
+    link: "https://heartdiseasepredictorknn.streamlit.app",
+    linkLabel: "heartdiseasepredictorknn.streamlit.app",
     github: "https://github.com/mithun2k2",
   },
   {
@@ -167,7 +167,7 @@ export const timeline = [
   {
     date: "2023 – Present",
     title: "BSc Data Science & AI",
-    sub: "University of East London · Year 2 · Student ID: 2633850",
+    sub: "University of East London",
     icon: "🎓",
   },
   {
