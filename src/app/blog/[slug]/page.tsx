@@ -1,10 +1,14 @@
 import BlogPostClient from "./BlogPostClient"
-import { blogPosts } from "@/data/blog"
+import { blogPosts } from "../../../data/blog"
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }))
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
+interface Props {
+  params: { slug: string }
+}
+
+export default function BlogPostPage({ params }: Props) {
   return <BlogPostClient slug={params.slug} />
 }
