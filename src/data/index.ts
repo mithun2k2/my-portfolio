@@ -86,8 +86,8 @@ export const projects = [
     statusLabel: "Academic",
     desc: "ML pipeline for heart disease prediction (CN5021). KNN, linear regression, and Bayesian classifier comparison with full EDA, feature engineering, and cross-validation on genomic dataset.",
     tags: ["Python", "scikit-learn", "KNN", "Pandas", "Matplotlib", "Seaborn", "Bayesian"],
-    link: null,
-    linkLabel: null,
+    link: "https://heartdiseasepredictorknn.streamlit.app",
+    linkLabel: "heartdiseasepredictorknn.streamlit.app",
     github: "https://github.com/mithun2k2",
   },
   {
