@@ -60,8 +60,8 @@ export const projects = [
     statusLabel: "Academic",
     desc: "Real-time traffic management system using YOLOv8 object detection. Achieved 94% accuracy on custom traffic dataset with vehicle counting, congestion detection, and adaptive signal control logic.",
     tags: ["YOLOv8", "Python", "OpenCV", "PyTorch", "Computer Vision", "CUDA"],
-    link: "https://heartdiseasepredictorknn.streamlit.app",
-    linkLabel: "heartdiseasepredictorknn.streamlit.app",
+    link: null,
+    linkLabel: null,
     github: "https://github.com/mithun2k2",
   },
   {
