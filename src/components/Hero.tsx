@@ -172,7 +172,7 @@ export default function Hero() {
                 fontSize: "4.5rem",
               }}
             >
-              🧠
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="AI" width={110} height={110} style={{ objectFit: "contain" }} />
             </div>
           </motion.div>
 

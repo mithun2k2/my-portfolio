@@ -1,7 +1,7 @@
 export const projects = [
   {
     id: "contentforge",
-    emoji: "🧠",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
     gradient: "from-[#1a1035] to-[#2d1b69]",
     title: "ContentForge AI",
     status: "live" as const,
@@ -14,7 +14,7 @@ export const projects = [
   },
   {
     id: "bookingforge",
-    emoji: "📅",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/twilio/twilio-original.svg",
     gradient: "from-[#0f2027] to-[#1a3a4a]",
     title: "BookingForge AI",
     status: "building" as const,
@@ -27,7 +27,7 @@ export const projects = [
   },
   {
     id: "enterprise-saas",
-    emoji: "🏗️",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
     gradient: "from-[#1a0f2e] to-[#2d1535]",
     title: "Enterprise Headless SaaS",
     status: "live" as const,
@@ -40,7 +40,7 @@ export const projects = [
   },
   {
     id: "videoforge",
-    emoji: "🎬",
+    emoji: "https://upload.wikimedia.org/wikipedia/commons/3/36/RunwayML_logo.png",
     gradient: "from-[#1f0a0a] to-[#3d1515]",
     title: "VideoForge AI",
     status: "building" as const,
@@ -53,7 +53,7 @@ export const projects = [
   },
   {
     id: "yolov8",
-    emoji: "🔬",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
     gradient: "from-[#0a1f0f] to-[#103520]",
     title: "YOLOv8 Traffic Management",
     status: "academic" as const,
@@ -66,7 +66,7 @@ export const projects = [
   },
   {
     id: "powerbi",
-    emoji: "📊",
+    emoji: "https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg",
     gradient: "from-[#0a1525] to-[#0f2540]",
     title: "Power BI Dashboards",
     status: "academic" as const,
@@ -79,7 +79,7 @@ export const projects = [
   },
   {
     id: "knn-heart",
-    emoji: "🫀",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg",
     gradient: "from-[#200a0a] to-[#3d1010]",
     title: "Heart Disease ML Predictor",
     status: "academic" as const,
@@ -92,7 +92,7 @@ export const projects = [
   },
   {
     id: "oracle",
-    emoji: "🛢️",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg",
     gradient: "from-[#0f1a0a] to-[#1a2d10]",
     title: "SuperRides RTFMS",
     status: "academic" as const,
@@ -105,7 +105,7 @@ export const projects = [
   },
   {
     id: "vmware",
-    emoji: "🖥️",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
     gradient: "from-[#0a0f20] to-[#10182e]",
     title: "VMware IT Infrastructure",
     status: "academic" as const,
@@ -118,7 +118,7 @@ export const projects = [
   },
   {
     id: "ba-ds",
-    emoji: "✈️",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
     gradient: "from-[#0a0f25] to-[#0f1a40]",
     title: "British Airways Data Science",
     status: "academic" as const,
