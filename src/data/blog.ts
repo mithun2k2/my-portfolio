@@ -600,7 +600,193 @@ The 94% mAP@0.5 beat the project target of 85% and was achieved largely through 
     `,
   },
   {
-    slug: "from-engineering-to-ai-career-pivot",
+    slug: "building-fullstack-booking-saas-react-node-prisma",
+    title: "Building a Full-Stack Booking SaaS with React, Node.js & Prisma",
+    excerpt:
+      "How I built CanopyCare — a production booking system with a 4-step wizard, live slot calendar, budget-to-package quote engine, admin panel, JWT auth, Cloudinary uploads, and SendGrid emails — from scratch to live deployment.",
+    category: "Web Dev",
+    tags: ["React", "Node.js", "Prisma", "PostgreSQL", "Vite", "Tailwind", "JWT", "Zustand"],
+    date: "2026-04-01",
+    readTime: 13,
+    featured: false,
+    coverGradient: "from-[#0a2010] via-[#0f3520] to-[#051008]",
+    icon: "📅",
+    content: `
+## What We're Building
+
+CanopyCare is a full-stack SaaS booking platform for a canopy cleaning business. Customers can book cleaning slots online, state their budget, and receive an instant package quote. The business owner manages everything through a dedicated admin panel.
+
+Live at: canopycare.contentforge.net
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, Vite, Tailwind CSS, Zustand |
+| Forms | React Hook Form, Zod |
+| Backend | Node.js, Express |
+| ORM | Prisma |
+| Database | PostgreSQL (Supabase) |
+| Auth | JWT + bcryptjs |
+| Uploads | Multer + Cloudinary |
+| Email | Nodemailer + Resend |
+
+## The 4-Step Booking Wizard
+
+The core UX challenge was making a complex booking flow feel simple. I broke it into 4 clear steps:
+
+1. **Cleaning details** — canopy type, size, grease level, address, photo uploads
+2. **Slot picker** — live calendar showing available time slots
+3. **Budget selector** — instant package match via quote engine
+4. **Review & confirm** — full breakdown with cancellation policy
+
+\`\`\`jsx
+// BookingWizard.jsx
+const STEPS = ['Details', 'Slot', 'Package', 'Confirm']
+
+export default function BookingWizard() {
+  const [step, setStep] = useState(0)
+  const { booking, updateBooking } = useBookingStore()
+
+  return (
+    <div>
+      <StepIndicator steps={STEPS} current={step} />
+      {step === 0 && <CleaningDetailsForm onNext={() => setStep(1)} />}
+      {step === 1 && <SlotPicker onNext={() => setStep(2)} />}
+      {step === 2 && <QuoteCard onNext={() => setStep(3)} />}
+      {step === 3 && <BookingConfirm onBack={() => setStep(2)} />}
+    </div>
+  )
+}
+\`\`\`
+
+## The Quote Engine
+
+The budget-to-package matching algorithm runs on both frontend and backend (shared logic):
+
+\`\`\`javascript
+// quoteEngine.js (shared between frontend and backend)
+export function matchPackage(budget, packages) {
+  // Sort packages by price ascending
+  const sorted = [...packages].sort((a, b) => a.price - b.price)
+  
+  // Find the best package within budget
+  const affordable = sorted.filter(p => p.price <= budget)
+  
+  if (affordable.length === 0) {
+    // Return cheapest package with upgrade prompt
+    return { package: sorted[0], upgrade: true }
+  }
+  
+  // Return most expensive affordable package (best value)
+  return { package: affordable[affordable.length - 1], upgrade: false }
+}
+\`\`\`
+
+## JWT Authentication with Role-Based Access
+
+\`\`\`javascript
+// auth.middleware.js
+export const authenticate = async (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1]
+  if (!token) return res.status(401).json({ error: 'No token' })
+  
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.user = await prisma.user.findUnique({ where: { id: decoded.id } })
+    next()
+  } catch {
+    res.status(401).json({ error: 'Invalid token' })
+  }
+}
+
+// role.middleware.js
+export const requireAdmin = (req, res, next) => {
+  if (req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Admin only' })
+  }
+  next()
+}
+\`\`\`
+
+## Cloudinary Photo Uploads
+
+\`\`\`javascript
+// upload.service.js
+import { v2 as cloudinary } from 'cloudinary'
+import { Readable } from 'stream'
+
+export async function uploadToCloudinary(buffer, folder) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder, resource_type: 'image' },
+      (error, result) => {
+        if (error) reject(error)
+        else resolve(result.secure_url)
+      }
+    )
+    Readable.from(buffer).pipe(stream)
+  })
+}
+\`\`\`
+
+## Preventing Double-Bookings
+
+Race conditions are a real problem with slot booking. I used Prisma transactions:
+
+\`\`\`javascript
+// bookingUtils.js
+export async function createBookingWithSlot(data) {
+  return await prisma.$transaction(async (tx) => {
+    // Lock the slot row
+    const slot = await tx.slot.findUnique({
+      where: { id: data.slotId }
+    })
+    
+    if (slot.bookedCount >= slot.capacity) {
+      throw new Error('Slot is fully booked')
+    }
+    
+    // Create booking and increment slot count atomically
+    const [booking] = await Promise.all([
+      tx.booking.create({ data }),
+      tx.slot.update({
+        where: { id: data.slotId },
+        data: { bookedCount: { increment: 1 } }
+      })
+    ])
+    
+    return booking
+  })
+}
+\`\`\`
+
+## 24-Hour Cancellation Rule
+
+\`\`\`javascript
+export function canCancel(slotDateTime) {
+  const hoursUntilSlot = differenceInHours(
+    new Date(slotDateTime),
+    new Date()
+  )
+  return hoursUntilSlot >= parseInt(process.env.CANCELLATION_HOURS || '24')
+}
+\`\`\`
+
+## Deployment Stack
+
+- **Database:** Supabase (free PostgreSQL)
+- **Backend:** Render (free Node.js hosting)
+- **Frontend:** Vercel (free Vite/React hosting)
+- **Domain:** canopycare.contentforge.net (Cloudflare subdomain, free)
+- **Photos:** Cloudinary (free tier)
+- **Email:** Resend (free tier)
+
+Total monthly cost: **£0**
+
+The full source is split across two repos — canopycare-backend and canopycare-frontend on GitHub.
+    `,
+  },
     title: "From Electrical Engineering to AI SaaS: My Career Pivot Story",
     excerpt:
       "How I transitioned from a BEng in Electrical Engineering at KUET to building production AI SaaS products in London — the skills that transferred, the gaps I had to fill, and what I'd do differently.",

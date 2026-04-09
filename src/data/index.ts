@@ -1,5 +1,18 @@
 export const projects = [
   {
+    id: "canopycare",
+    emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    gradient: "from-[#0a2010] to-[#0f3520]",
+    title: "CanopyCare",
+    status: "live" as const,
+    statusLabel: "Live",
+    desc: "Full-stack SaaS booking platform for a canopy cleaning business. 4-step booking wizard, live slot calendar, budget-to-package quote engine, admin panel with revenue reports, JWT auth, Cloudinary photo uploads, SendGrid email notifications, and 24-hour cancellation enforcement.",
+    tags: ["React", "Vite", "Tailwind", "Node.js", "Express", "Prisma", "PostgreSQL", "Supabase", "Cloudinary", "SendGrid", "Zustand", "JWT"],
+    link: "https://canopycare.contentforge.net",
+    linkLabel: "canopycare.contentforge.net",
+    github: "https://github.com/mithun2k2/canopycare-frontend",
+  },
+  {
     id: "contentforge",
     emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
     gradient: "from-[#1a1035] to-[#2d1b69]",
@@ -60,8 +73,8 @@ export const projects = [
     statusLabel: "Academic",
     desc: "Real-time traffic management system using YOLOv8 object detection. Achieved 94% accuracy on custom traffic dataset with vehicle counting, congestion detection, and adaptive signal control logic.",
     tags: ["YOLOv8", "Python", "OpenCV", "PyTorch", "Computer Vision", "CUDA"],
-    link: null,
-    linkLabel: null,
+    link: "https://heartdiseasepredictorknn.streamlit.app",
+    linkLabel: "heartdiseasepredictorknn.streamlit.app",
     github: "https://github.com/mithun2k2",
   },
   {
@@ -86,8 +99,8 @@ export const projects = [
     statusLabel: "Academic",
     desc: "ML pipeline for heart disease prediction (CN5021). KNN, linear regression, and Bayesian classifier comparison with full EDA, feature engineering, and cross-validation on genomic dataset.",
     tags: ["Python", "scikit-learn", "KNN", "Pandas", "Matplotlib", "Seaborn", "Bayesian"],
-    link: "https://heartdiseasepredictorknn.streamlit.app",
-    linkLabel: "heartdiseasepredictorknn.streamlit.app",
+    link: null,
+    linkLabel: null,
     github: "https://github.com/mithun2k2",
   },
   {
