@@ -48,12 +48,10 @@ export default function AIChatWidget() {
     setLoading(true)
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/.netlify/functions/claude-proxy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
           system: SYSTEM_PROMPT,
           messages: [
             ...messages.filter(m => m.role !== "assistant" || messages.indexOf(m) > 0).map(m => ({
