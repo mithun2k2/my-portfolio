@@ -14,7 +14,7 @@ Key facts about Hassan:
 - Built YOLOv8 traffic management system at 94% accuracy
 - WBL placement as Computer Lab Technician at UEL
 - Open to summer 2026 internships and freelance SaaS work
-- Email: hello@mhassanmithun.com | LinkedIn: linkedin.com/in/mahmudul-hassan-9725226a
+- Email: contact@mhassanmithun.com | LinkedIn: linkedin.com/in/mahmudul-hassan-9725226a
 - Location: London, UK
 
 Be concise, friendly and professional. If asked about hiring or collaboration, encourage them to use the contact page or email directly. Keep responses under 150 words unless the question needs more detail.`
@@ -54,7 +54,7 @@ export default function AIChatWidget() {
         body: JSON.stringify({
           system: SYSTEM_PROMPT,
           messages: [
-            ...messages.filter(m => m.role !== "assistant" || messages.indexOf(m) > 0).map(m => ({
+            ...messages.filter((m, i) => !(m.role === "assistant" && i === 0)).map(m => ({
               role: m.role,
               content: m.content
             })),
@@ -66,7 +66,7 @@ export default function AIChatWidget() {
       const reply = data.content?.[0]?.text || "Sorry, I couldn't process that. Please try again!"
       setMessages(prev => [...prev, { role: "assistant", content: reply }])
     } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "Sorry, something went wrong. Please email hello@mhassanmithun.com directly!" }])
+      setMessages(prev => [...prev, { role: "assistant", content: "Sorry, something went wrong. Please email contact@mhassanmithun.com directly!" }])
     } finally {
       setLoading(false)
     }

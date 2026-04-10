@@ -117,7 +117,7 @@ export default function Navbar() {
             <a href="/blog" className="nav-link nl-blog">Blog</a>
             <a href="/contact" className="nav-link nl-contact">Contact</a>
             <div style={{ width: "1rem" }} />
-            <a href="mailto:hello@mhassanmithun.com" className="hire-btn">Hire Me</a>
+            <a href="mailto:contact@mhassanmithun.com" className="hire-btn">Hire Me</a>
           </div>
         </div>
       </motion.nav>

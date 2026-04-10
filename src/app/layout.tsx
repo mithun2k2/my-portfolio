@@ -61,7 +61,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Mahmudul Hassan Mithun",
   url: "https://mhassanmithun.com",
-  email: "hello@mhassanmithun.com",
+  email: "contact@mhassanmithun.com",
   telephone: "+447732504855",
   jobTitle: "AI & SaaS Developer",
   description:

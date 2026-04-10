@@ -88,7 +88,7 @@ export default function ContactPage() {
           {/* Left: info cards */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             {[
-              { icon: "✉️", label: "Email", value: "hello@mhassanmithun.com", href: "mailto:hello@mhassanmithun.com" },
+              { icon: "✉️", label: "Email", value: "contact@mhassanmithun.com", href: "mailto:contact@mhassanmithun.com" },
               { icon: "💼", label: "LinkedIn", value: "mahmudul-hassan", href: "https://linkedin.com/in/mahmudul-hassan-9725226a" },
               { icon: "⌥", label: "GitHub", value: "github.com/mithun2k2", href: "https://github.com/mithun2k2" },
               { icon: "🌐", label: "Portfolio", value: "mhassanmithun.com", href: "https://mhassanmithun.com" },
@@ -175,7 +175,7 @@ export default function ContactPage() {
                 </motion.button>
 
                 <p style={{ fontSize: "0.72rem", color: "var(--muted)", textAlign: "center" }}>
-                  Or email directly: <a href="mailto:hello@mhassanmithun.com" style={{ color: "var(--accent)" }}>hello@mhassanmithun.com</a>
+                  Or email directly: <a href="mailto:contact@mhassanmithun.com" style={{ color: "var(--accent)" }}>contact@mhassanmithun.com</a>
                 </p>
               </div>
             )}
