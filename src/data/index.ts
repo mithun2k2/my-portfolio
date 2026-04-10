@@ -150,7 +150,7 @@ export const skills = [
   { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg", name: "FastAPI", level: "Advanced", pct: 85 },
   { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", name: "LangGraph / LangChain", level: "Advanced", pct: 85 },
   { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", name: "PostgreSQL", level: "Intermediate", pct: 78 },
-  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg", name: "Auth0 / Stripe", level: "Intermediate", pct: 80 },
+  { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oauth/oauth-original.svg", name: "Auth0 / Stripe", level: "Intermediate", pct: 80 },
   { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg", name: "Prisma / Supabase", level: "Advanced", pct: 82 },
   { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg", name: "Railway / Vercel", level: "Advanced", pct: 88 },
   { icon: "https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg", name: "Power BI / DAX", level: "Intermediate", pct: 72 },
@@ -167,7 +167,7 @@ export const timeline = [
   {
     date: "2023 – Present",
     title: "BSc Data Science & AI",
-    sub: "University of East London",
+    sub: "University of East London · Year 2 · Student ID: 2633850",
     icon: "🎓",
   },
   {
