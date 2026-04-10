@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { blogPosts } from "../../../data/blog"
+import { blogPosts } from "../../data/blog"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
@@ -151,7 +151,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
               {related.map((rp) => (
                 <Link key={rp.slug} href={`/blog/${rp.slug}`} style={{ textDecoration: "none" }}>
                   <motion.div whileHover={{ y: -3, borderColor: "var(--accent)" }} style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12, padding: "1.25rem", cursor: "pointer", transition: "border-color 0.2s" }}>
-                    <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{rp.icon}</div>
+                    <img src={rp.icon} alt={rp.title} width={40} height={40} style={{ objectFit: "contain", marginBottom: "0.5rem", filter: rp.title.includes("Next") || rp.title.includes("Windows") ? "invert(1)" : "none" }} />
                     <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "0.9rem", marginBottom: "0.3rem", color: "var(--text)" }}>{rp.title}</div>
                     <div style={{ color: "var(--accent)", fontSize: "0.78rem", fontWeight: 600 }}>{rp.readTime} min read →</div>
                   </motion.div>

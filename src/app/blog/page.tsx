@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { blogPosts, categories } from "../../data/blog"
+import { blogPosts, categories } from "../data/blog"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-GB", {
@@ -318,10 +318,18 @@ export default function BlogPage() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        fontSize: "2.5rem",
                       }}
                     >
-                      {post.icon}
+                      <img
+                        src={post.icon}
+                        alt={post.title}
+                        width={52}
+                        height={52}
+                        style={{
+                          objectFit: "contain",
+                          filter: post.title.includes("Next") || post.title.includes("Windows") ? "invert(1)" : "none",
+                        }}
+                      />
                     </div>
 
                     <div style={{ padding: "1.25rem", flex: 1, display: "flex", flexDirection: "column" }}>
