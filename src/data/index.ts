@@ -167,7 +167,7 @@ export const timeline = [
   {
     date: "2023 – Present",
     title: "BSc Data Science & AI",
-    sub: "University of East London · Year 2 · Student ID: 2633850",
+    sub: "University of East London",
     icon: "🎓",
   },
   {
