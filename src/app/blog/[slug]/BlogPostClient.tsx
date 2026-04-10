@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { blogPosts } from "../../../data/blog"
+import { blogPosts } from "../../data/blog"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
@@ -63,8 +63,8 @@ function renderContent(content: string) {
       ); continue
     }
 
-    if (line.startsWith("## ")) { elements.push(<h2 key={key} style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.4rem", fontWeight: 800, margin: "2.5rem 0 0.75rem", color: "var(--text)" }}>{line.slice(3)}</h2>); i++; continue }
-    if (line.startsWith("### ")) { elements.push(<h3 key={key} style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.1rem", fontWeight: 700, margin: "1.75rem 0 0.5rem", color: "var(--text)" }}>{line.slice(4)}</h3>); i++; continue }
+    if (line.startsWith("## ")) { elements.push(<h2 key={key} style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 800, margin: "2.5rem 0 0.75rem", color: "var(--text)" }}>{line.slice(3)}</h2>); i++; continue }
+    if (line.startsWith("### ")) { elements.push(<h3 key={key} style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "1.75rem 0 0.5rem", color: "var(--text)" }}>{line.slice(4)}</h3>); i++; continue }
 
     if (/^\d+\./.test(line.trim())) {
       const items: string[] = []
@@ -124,7 +124,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
             <span style={{ background: "rgba(108,99,255,0.15)", color: "var(--accent)", fontSize: "0.72rem", padding: "0.25rem 0.65rem", borderRadius: 6, fontWeight: 700 }}>{post.category}</span>
             <span style={{ color: "var(--muted)", fontSize: "0.78rem" }}>{post.readTime} min read · {formatDate(post.date)}</span>
           </div>
-          <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 800, lineHeight: 1.15, marginBottom: "1.25rem" }}>{post.title}</h1>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 900, lineHeight: 1.15, marginBottom: "1.25rem" }}>{post.title}</h1>
           <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.75, marginBottom: "1.5rem", borderLeft: "3px solid var(--accent)", paddingLeft: "1rem" }}>{post.excerpt}</p>
           <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginBottom: "2.5rem" }}>
             {post.tags.map((tag) => <span key={tag} style={{ background: "var(--surface)", border: "1px solid var(--border)", color: "var(--muted)", fontSize: "0.68rem", padding: "0.2rem 0.6rem", borderRadius: 6 }}>{tag}</span>)}
@@ -139,14 +139,14 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         <div style={{ marginTop: "3rem", padding: "1.5rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, var(--accent), var(--accent2))", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#fff", flexShrink: 0 }}>MH</div>
           <div>
-            <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "0.95rem" }}>Mahmudul Hassan Mithun</div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1rem" }}>Mahmudul Hassan Mithun</div>
             <div style={{ color: "var(--muted)", fontSize: "0.8rem", marginTop: "0.2rem" }}>AI SaaS Builder · BSc Data Science & AI, UEL · Building ContentForge AI</div>
           </div>
         </div>
 
         {related.length > 0 && (
           <div style={{ marginTop: "3rem" }}>
-            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem" }}>Related Posts</h3>
+            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, marginBottom: "1rem" }}>Related Posts</h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1rem" }}>
               {related.map((rp) => (
                 <Link key={rp.slug} href={`/blog/${rp.slug}`} style={{ textDecoration: "none" }}>

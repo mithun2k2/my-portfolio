@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { blogPosts, categories } from "../../data/blog"
+import { blogPosts, categories } from "../data/blog"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-GB", {
@@ -169,7 +169,7 @@ export default function BlogPage() {
                 >
                   Featured
                 </div>
-                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{featured.icon}</div>
+                <img src={featured.icon} alt={featured.title} width={52} height={52} style={{ objectFit: "contain", marginBottom: "1rem", filter: featured.title.includes("Next") ? "invert(1)" : "none" }} />
                 <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem", flexWrap: "wrap" }}>
                   <span
                     style={{

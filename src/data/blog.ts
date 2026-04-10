@@ -24,7 +24,7 @@ export const blogPosts: BlogPost[] = [
     readTime: 12,
     featured: true,
     coverGradient: "from-[#1a1035] via-[#2d1b69] to-[#1a0f2e]",
-    icon: "🤖",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
     content: `
 ## The Problem With Simple LLM Wrappers
 
@@ -134,7 +134,7 @@ The full ContentForge AI pipeline is live at contentforge.net. It's processing h
     readTime: 15,
     featured: false,
     coverGradient: "from-[#0f0a2e] via-[#1a1035] to-[#0a0f1e]",
-    icon: "🏗️",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
     content: `
 ## What Is Multi-Tenancy?
 
@@ -253,7 +253,7 @@ The platform is live at platform.contentforge.net handling all 4 verticals from 
     readTime: 10,
     featured: false,
     coverGradient: "from-[#0a1525] via-[#0f2540] to-[#051020]",
-    icon: "📊",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg",
     content: `
 ## Why DAX Still Matters
 
@@ -362,7 +362,7 @@ These patterns formed the backbone of my CN5026 multi-page enterprise dashboard,
     readTime: 8,
     featured: false,
     coverGradient: "from-[#0a1a0a] via-[#0f2a10] to-[#051005]",
-    icon: "🚀",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
     content: `
 ## Railway Is Great — Until It Isn't
 
@@ -481,7 +481,7 @@ With these in place, ContentForge AI's Railway backend has maintained 99.7% upti
     readTime: 11,
     featured: false,
     coverGradient: "from-[#0a1f0f] via-[#103520] to-[#051008]",
-    icon: "🔬",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
     content: `
 ## Why Traffic Management Needs Computer Vision
 
@@ -610,7 +610,7 @@ The 94% mAP@0.5 beat the project target of 85% and was achieved largely through 
     readTime: 13,
     featured: false,
     coverGradient: "from-[#0a2010] via-[#0f3520] to-[#051008]",
-    icon: "📅",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
     content: `
 ## What We're Building
 
@@ -798,7 +798,7 @@ The full source is split across two repos — canopycare-backend and canopycare-
     readTime: 7,
     featured: false,
     coverGradient: "from-[#1a0f2e] via-[#2d1535] to-[#0a0515]",
-    icon: "🎓",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
     content: `
 ## The Unexpected Foundation
 
@@ -869,7 +869,7 @@ If you're considering a similar pivot: the path from engineering to AI is shorte
     readTime: 9,
     featured: false,
     coverGradient: "from-[#0a2010] via-[#0f3520] to-[#051008]",
-    icon: "🚀",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
     content: `
 ## The Zero-Cost Stack
 
@@ -983,7 +983,7 @@ The entire CanopyCare stack — database, backend API, frontend, photo storage, 
     readTime: 14,
     featured: false,
     coverGradient: "from-[#0f2027] via-[#1a3a4a] to-[#051015]",
-    icon: "🤖",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
     content: `
 ## Why WhatsApp for Bookings?
 
@@ -1177,7 +1177,7 @@ BookingForge AI is currently in active development — the WhatsApp agent is liv
     readTime: 11,
     featured: false,
     coverGradient: "from-[#0a0f20] via-[#10182e] to-[#050810]",
-    icon: "🖥️",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg",
     content: `
 ## Project Overview
 
@@ -1352,7 +1352,7 @@ The full lab logs are documented in my CN5009 WBL placement report.
     readTime: 10,
     featured: false,
     coverGradient: "from-[#0f1a0a] via-[#1a2d10] to-[#050a05]",
-    icon: "🛢️",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg",
     content: `
 ## Project Overview
 
