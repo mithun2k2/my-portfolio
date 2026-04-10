@@ -7,6 +7,11 @@ export const metadata: Metadata = {
     "Portfolio of Mahmudul Hassan Mithun — AI-powered SaaS builder, Data Science & AI student at University of East London. Building ContentForge AI, BookingForge AI, and enterprise SaaS platforms.",
   keywords: ["AI", "SaaS", "Next.js", "FastAPI", "LangGraph", "Data Science", "Machine Learning"],
   authors: [{ name: "Mahmudul Hassan Mithun", url: "https://mhassanmithun.com" }],
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   openGraph: {
     title: "Mahmudul Hassan Mithun · AI & SaaS Developer",
     description: "AI-powered SaaS builder & Data Science student at University of East London.",
