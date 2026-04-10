@@ -1206,13 +1206,13 @@ After installing Windows Server 2022, set a static IP:
 
 \`\`\`powershell
 # Set static IP
-New-NetIPAddress -InterfaceAlias "Ethernet0" `
-  -IPAddress 192.168.1.10 `
-  -PrefixLength 24 `
+New-NetIPAddress -InterfaceAlias "Ethernet0" \`
+  -IPAddress 192.168.1.10 \`
+  -PrefixLength 24 \`
   -DefaultGateway 192.168.1.1
 
 # Set DNS to itself (DC will be its own DNS)
-Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" `
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" \`
   -ServerAddresses 192.168.1.10
 
 # Rename the server
@@ -1227,13 +1227,13 @@ Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
 
 # Promote to Domain Controller
 Import-Module ADDSDeployment
-Install-ADDSForest `
-  -DomainName "project.local" `
-  -DomainNetbiosName "PROJECT" `
-  -ForestMode "WinThreshold" `
-  -DomainMode "WinThreshold" `
-  -InstallDns:$true `
-  -SafeModeAdministratorPassword (ConvertTo-SecureString "P@ssword123!" -AsPlainText -Force) `
+Install-ADDSForest \`
+  -DomainName "project.local" \`
+  -DomainNetbiosName "PROJECT" \`
+  -ForestMode "WinThreshold" \`
+  -DomainMode "WinThreshold" \`
+  -InstallDns:$true \`
+  -SafeModeAdministratorPassword (ConvertTo-SecureString "P@ssword123!" -AsPlainText -Force) \`
   -Force:$true
 \`\`\`
 
@@ -1246,15 +1246,15 @@ Server will restart automatically and become the DC for project.local.
 Install-WindowsFeature -Name DHCP -IncludeManagementTools
 
 # Create DHCP scope
-Add-DhcpServerv4Scope `
-  -Name "project.local scope" `
-  -StartRange 192.168.1.100 `
-  -EndRange 192.168.1.200 `
+Add-DhcpServerv4Scope \`
+  -Name "project.local scope" \`
+  -StartRange 192.168.1.100 \`
+  -EndRange 192.168.1.200 \`
   -SubnetMask 255.255.255.0
 
 # Set DHCP options (DNS and gateway)
-Set-DhcpServerv4OptionValue `
-  -DnsServer 192.168.1.10 `
+Set-DhcpServerv4OptionValue \`
+  -DnsServer 192.168.1.10 \`
   -Router 192.168.1.1
 
 # Authorise DHCP in AD
@@ -1270,14 +1270,14 @@ New-ADOrganizationalUnit -Name "IT" -Path "DC=project,DC=local"
 New-ADOrganizationalUnit -Name "Computers" -Path "DC=project,DC=local"
 
 # Create users
-New-ADUser `
-  -Name "Hassan Mithun" `
-  -GivenName "Hassan" `
-  -Surname "Mithun" `
-  -SamAccountName "hmithun" `
-  -UserPrincipalName "hmithun@project.local" `
-  -Path "OU=IT,DC=project,DC=local" `
-  -AccountPassword (ConvertTo-SecureString "P@ssword123!" -AsPlainText -Force) `
+New-ADUser \`
+  -Name "Hassan Mithun" \`
+  -GivenName "Hassan" \`
+  -Surname "Mithun" \`
+  -SamAccountName "hmithun" \`
+  -UserPrincipalName "hmithun@project.local" \`
+  -Path "OU=IT,DC=project,DC=local" \`
+  -AccountPassword (ConvertTo-SecureString "P@ssword123!" -AsPlainText -Force) \`
   -Enabled $true
 
 # Add to Domain Admins
@@ -1295,8 +1295,8 @@ Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" -ServerAddresses 192.168.
 Then join the domain:
 
 \`\`\`powershell
-Add-Computer -DomainName "project.local" `
-  -Credential (Get-Credential) `
+Add-Computer -DomainName "project.local" \`
+  -Credential (Get-Credential) \`
   -Restart
 \`\`\`
 
