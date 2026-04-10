@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { blogPosts } from "../../../data/blog"
+import { blogPosts } from "../../data/blog"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
@@ -109,7 +109,46 @@ export default function BlogPostClient({ slug }: { slug: string }) {
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)" }}>
-      <div style={{ position: "fixed", top: 0, left: 0, height: 3, width: `${scrollProgress * 100}%`, background: "linear-gradient(90deg, var(--accent), var(--accent2))", zIndex: 200 }} />
+      {/* Progress bar */}
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 3, background: "rgba(255,255,255,0.05)", zIndex: 200 }}>
+        <motion.div
+          style={{
+            height: "100%",
+            background: "linear-gradient(90deg, #6c63ff, #ff6584)",
+            boxShadow: "0 0 10px rgba(108,99,255,0.8), 0 0 20px rgba(108,99,255,0.4)",
+            width: `${scrollProgress * 100}%`,
+            transition: "width 0.1s linear",
+          }}
+        />
+      </div>
+
+      {/* Reading % indicator */}
+      {scrollProgress > 0.05 && scrollProgress < 0.98 && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          style={{
+            position: "fixed",
+            bottom: "2rem",
+            left: "2rem",
+            background: "rgba(12,12,20,0.9)",
+            border: "1px solid rgba(108,99,255,0.3)",
+            borderRadius: 10,
+            padding: "0.4rem 0.75rem",
+            fontSize: "0.72rem",
+            fontWeight: 700,
+            color: "var(--accent)",
+            zIndex: 100,
+            backdropFilter: "blur(12px)",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.4rem",
+          }}
+        >
+          <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+          {Math.round(scrollProgress * 100)}% read
+        </motion.div>
+      )}
 
       <nav style={{ position: "sticky", top: 0, zIndex: 100, background: "rgba(10,10,15,0.92)", backdropFilter: "blur(16px)", borderBottom: "1px solid var(--border)", padding: "0 2rem" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
