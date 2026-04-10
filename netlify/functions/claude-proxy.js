@@ -1,9 +1,22 @@
 exports.handler = async (event) => {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" }
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json",
   }
+
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 200, headers, body: "" }
+  }
+
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, headers, body: JSON.stringify({ error: "Method not allowed" }) }
+  }
+
   try {
-    const body = JSON.parse(event.body)
+    const { system, messages } = JSON.parse(event.body)
+
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -13,23 +26,26 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 1000,
-        system: body.system,
-        messages: body.messages,
+        max_tokens: 300,
+        system,
+        messages,
       }),
     })
-    const data = await response.json()
+
+    const text = await response.text()
+    console.log("Anthropic response:", text)
+
     return {
-      statusCode: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "https://mhassanmithun.com",
-        "Access-Control-Allow-Methods": "POST",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
-      body: JSON.stringify(data),
+      statusCode: response.status,
+      headers,
+      body: text,
     }
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: "Proxy error" }) }
+    console.error("Proxy error:", err)
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: err.message }),
+    }
   }
 }
