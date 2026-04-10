@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { projects } from "@/data"
 
@@ -12,6 +12,79 @@ const statusStyles: Record<string, { bg: string; color: string }> = {
 
 const filters = ["All", "Live", "Building", "Academic"] as const
 type Filter = (typeof filters)[number]
+
+// URLs to ping for live status
+const liveUrls: Record<string, string> = {
+  "canopycare": "https://canopycare-backend.onrender.com/api/health",
+  "contentforge": "https://contentforge.net",
+  "enterprise": "https://platform.contentforge.net",
+}
+
+type UpStatus = "checking" | "up" | "down"
+
+function useProjectStatus(projectId: string, isLive: boolean) {
+  const [status, setStatus] = useState<UpStatus>("checking")
+
+  useEffect(() => {
+    if (!isLive || !liveUrls[projectId]) {
+      setStatus("up")
+      return
+    }
+
+    const check = async () => {
+      try {
+        const res = await fetch(liveUrls[projectId], {
+          method: "HEAD",
+          mode: "no-cors",
+          cache: "no-cache",
+        })
+        setStatus("up")
+      } catch {
+        setStatus("down")
+      }
+    }
+
+    check()
+    const interval = setInterval(check, 60000) // check every 60s
+    return () => clearInterval(interval)
+  }, [projectId, isLive])
+
+  return status
+}
+
+function StatusDot({ projectId, isLive }: { projectId: string; isLive: boolean }) {
+  const status = useProjectStatus(projectId, isLive)
+
+  if (!isLive) return null
+
+  const color = status === "checking" ? "#888" : status === "up" ? "#43e97b" : "#ff6584"
+  const label = status === "checking" ? "Checking..." : status === "up" ? "Live" : "Down"
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 5, marginLeft: "auto" }}>
+      <div style={{ position: "relative", width: 8, height: 8 }}>
+        <div style={{
+          width: 8, height: 8, borderRadius: "50%", background: color,
+          position: "absolute",
+        }} />
+        {status === "up" && (
+          <div style={{
+            width: 8, height: 8, borderRadius: "50%", background: color,
+            position: "absolute", opacity: 0.4,
+            animation: "ping 1.5s ease-in-out infinite",
+          }} />
+        )}
+      </div>
+      <span style={{ fontSize: "0.65rem", color, fontWeight: 600 }}>{label}</span>
+      <style>{`
+        @keyframes ping {
+          0% { transform: scale(1); opacity: 0.4; }
+          100% { transform: scale(2.5); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  )
+}
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState<Filter>("All")
@@ -70,6 +143,7 @@ export default function Projects() {
         <AnimatePresence mode="popLayout">
           {filtered.map((project, i) => {
             const s = statusStyles[project.status] ?? statusStyles.academic
+            const isLive = project.status === "live"
             return (
               <motion.div
                 key={project.id}
@@ -140,32 +214,35 @@ export default function Projects() {
                   >
                     <h3
                       style={{
-                        fontFamily: "'Syne', sans-serif",
                         fontSize: "1.05rem",
                         fontWeight: 700,
+                        fontFamily: "'Syne', sans-serif",
                       }}
                     >
                       {project.title}
                     </h3>
                     <span
                       style={{
-                        fontSize: "0.62rem",
-                        padding: "0.2rem 0.55rem",
-                        borderRadius: 999,
+                        fontSize: "0.65rem",
                         fontWeight: 700,
+                        padding: "0.2rem 0.55rem",
+                        borderRadius: 6,
                         background: s.bg,
                         color: s.color,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
                       }}
                     >
                       {project.statusLabel}
                     </span>
+                    <StatusDot projectId={project.id} isLive={isLive} />
                   </div>
 
                   <p
                     style={{
-                      fontSize: "0.82rem",
                       color: "var(--muted)",
-                      lineHeight: 1.65,
+                      fontSize: "0.82rem",
+                      lineHeight: 1.7,
                       marginBottom: "1rem",
                       flex: 1,
                     }}
@@ -174,18 +251,24 @@ export default function Projects() {
                   </p>
 
                   {/* Tags */}
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.75rem" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "0.35rem",
+                      marginBottom: "1rem",
+                    }}
+                  >
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
                         style={{
-                          background: "var(--tag-bg)",
-                          border: "1px solid var(--border)",
+                          fontSize: "0.68rem",
+                          padding: "0.18rem 0.5rem",
+                          borderRadius: 5,
+                          background: "rgba(108,99,255,0.1)",
                           color: "var(--muted)",
-                          fontSize: "0.65rem",
-                          padding: "0.2rem 0.55rem",
-                          borderRadius: 6,
-                          fontWeight: 500,
+                          border: "1px solid rgba(108,99,255,0.15)",
                         }}
                       >
                         {tag}
@@ -194,42 +277,37 @@ export default function Projects() {
                   </div>
 
                   {/* Links */}
-                  <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                  <div style={{ display: "flex", gap: "0.75rem", marginTop: "auto" }}>
                     {project.link && (
-                      <motion.a
+                      <a
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ x: 2 }}
                         style={{
                           fontSize: "0.78rem",
                           color: "var(--accent)",
-                          fontWeight: 600,
+                          textDecoration: "none",
                           display: "flex",
                           alignItems: "center",
-                          gap: "0.3rem",
+                          gap: 4,
                         }}
                       >
                         ↗ {project.linkLabel}
-                      </motion.a>
+                      </a>
                     )}
                     {project.github && (
-                      <motion.a
+                      <a
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ x: 2 }}
                         style={{
                           fontSize: "0.78rem",
                           color: "var(--muted)",
-                          fontWeight: 500,
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.3rem",
+                          textDecoration: "none",
                         }}
                       >
                         ⌥ GitHub
-                      </motion.a>
+                      </a>
                     )}
                   </div>
                 </div>
