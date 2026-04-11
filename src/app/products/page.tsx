@@ -7,7 +7,7 @@ import Link from "next/link"
 const products = [
   {
     id: "linkedin-bot",
-    icon: "💼",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg",
     name: "LinkedInForge AI",
     tagline: "Automate B2B outreach at scale",
     description: "AI-powered LinkedIn automation that sends personalized connection requests, follow-ups, and DMs. Built for agencies and B2B sales teams who want to 10x their pipeline without the manual grind.",
@@ -31,7 +31,7 @@ const products = [
   },
   {
     id: "support-bot",
-    icon: "🤖",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
     name: "SupportForge AI",
     tagline: "White-label AI support for any business",
     description: "Deploy a fully trained AI customer support chatbot on any website in minutes. Handles FAQs, ticket routing, and order queries. White-label it and resell to your clients.",
@@ -55,7 +55,7 @@ const products = [
   },
   {
     id: "scheduler-bot",
-    icon: "📅",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
     name: "ScheduleForge AI",
     tagline: "Post once. Publish everywhere.",
     description: "The lightweight content scheduler for solo creators and small businesses. Write one post, auto-repurpose it into LinkedIn, Twitter, Instagram, and Facebook formats, then schedule across all platforms.",
@@ -84,7 +84,7 @@ const products = [
   },
   {
     id: "email-bot",
-    icon: "📧",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
     name: "OutreachForge AI",
     tagline: "Hyper-personalized cold emails at scale",
     description: "AI cold email automation that scrapes lead data, drafts personalized emails using LLM, sends via your SMTP/SendGrid, and tracks opens, clicks, and replies in real time.",
@@ -108,7 +108,7 @@ const products = [
   },
   {
     id: "ecom-bot",
-    icon: "🛍️",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/shopify/shopify-original.svg",
     name: "ShopForge AI",
     tagline: "Bulk AI product descriptions for Shopify & WooCommerce",
     description: "Upload your product CSV and get SEO-optimized product descriptions, meta titles, meta descriptions, and alt text generated in bulk. Works with Shopify, WooCommerce, and any e-commerce platform.",
@@ -180,7 +180,7 @@ function WaitlistForm({ product, onClose }: { product: Product; onClose: () => v
           onClick={e => e.stopPropagation()}
           style={{ background: "var(--bg)", border: "1px solid rgba(108,99,255,0.3)", borderRadius: 20, padding: "2.5rem", width: "min(480px, 92vw)", boxShadow: "0 24px 80px rgba(0,0,0,0.6)" }}
         >
-          <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>{product.icon}</div>
+          <img src={product.icon} alt={product.name} width={52} height={52} style={{ objectFit: "contain", marginBottom: "0.75rem" }} />
           <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.4rem", fontWeight: 800, marginBottom: "0.5rem" }}>
             Join the {product.name} Waitlist
           </h3>
@@ -299,7 +299,7 @@ export default function ProductsPage() {
                 alignItems: "flex-start",
                 flexWrap: "wrap",
               }}>
-                <div style={{ fontSize: "3rem" }}>{product.icon}</div>
+                <img src={product.icon} alt={product.name} width={56} height={56} style={{ objectFit: "contain", filter: product.id === "linkedin-bot" ? "none" : "none" }} />
                 <div style={{ flex: 1, minWidth: 200 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.4rem", flexWrap: "wrap" }}>
                     <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.5rem", fontWeight: 800, color: "#fff" }}>{product.name}</h2>
