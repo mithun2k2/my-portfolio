@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import "./globals.css"
+import PageTransition from "@/components/PageTransition"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mhassanmithun.com"),
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Mahmudul Hassan Mithun · AI & SaaS Developer",
-    description: "AI-powered SaaS builder & Data Science student at UEL. Building LangGraph agents, FastAPI backends, and Next.js SaaS platforms.",
+    description: "AI-powered SaaS builder & Data Science student at UEL.",
     images: ["/og-image.png"],
   },
   alternates: {
@@ -64,8 +65,7 @@ const jsonLd = {
   email: "contact@mhassanmithun.com",
   telephone: "+447732504855",
   jobTitle: "AI & SaaS Developer",
-  description:
-    "AI-powered SaaS builder and Data Science & AI student at University of East London.",
+  description: "AI-powered SaaS builder and Data Science & AI student at University of East London.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "London",
@@ -87,11 +87,7 @@ const jsonLd = {
   ],
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -101,7 +97,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <PageTransition>{children}</PageTransition>
+      </body>
     </html>
   )
 }
