@@ -58,6 +58,7 @@ function RadarChart() {
         ref={ref}
         width={size}
         height={size}
+        viewBox={`-30 -30 ${size + 60} ${size + 60}`}
         style={{ overflow: "visible" }}
       >
         {/* Grid levels */}
