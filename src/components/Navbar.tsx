@@ -116,6 +116,7 @@ export default function Navbar() {
             <a href="#projects" className="nav-link nl-projects">Projects</a>
             <a href="#experience" className="nav-link nl-experience">Experience</a>
             <a href="/blog" className="nav-link nl-blog">Blog</a>
+            <a href="/products" className="nav-link nl-contact">Products</a>
             <a href="/contact" className="nav-link nl-contact">Contact</a>
             <div style={{ width: "0.75rem" }} />
             <ThemeToggle />
