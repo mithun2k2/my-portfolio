@@ -144,7 +144,7 @@ function RadarChart() {
                 textAnchor="middle"
                 fontSize={isHovered ? "11" : "10"}
                 fontWeight={isHovered ? "700" : "500"}
-                fill={isHovered ? "#6c63ff" : "rgba(255,255,255,0.6)"}
+                fill={isHovered ? "var(--accent)" : "var(--muted)"}
                 fontFamily="'DM Sans', sans-serif"
                 style={{ transition: "all 0.2s" }}
               >
@@ -156,7 +156,7 @@ function RadarChart() {
                   y={pos.y + 16}
                   textAnchor="middle"
                   fontSize="9"
-                  fill="#ff6584"
+                  fill="var(--accent2)"
                   fontFamily="'DM Sans', sans-serif"
                   fontWeight="700"
                 >
@@ -168,8 +168,8 @@ function RadarChart() {
         })}
 
         {/* Center label */}
-        <text x={cx} y={cy - 6} textAnchor="middle" fontSize="11" fill="rgba(255,255,255,0.4)" fontFamily="'DM Sans', sans-serif">Skills</text>
-        <text x={cx} y={cy + 8} textAnchor="middle" fontSize="9" fill="rgba(108,99,255,0.6)" fontFamily="'DM Sans', sans-serif">Radar</text>
+        <text x={cx} y={cy - 6} textAnchor="middle" fontSize="11" fill="var(--muted)" fontFamily="'DM Sans', sans-serif">Skills</text>
+        <text x={cx} y={cy + 8} textAnchor="middle" fontSize="9" fill="var(--accent)" fontFamily="'DM Sans', sans-serif">Radar</text>
       </svg>
 
       {/* Legend */}
@@ -181,7 +181,7 @@ function RadarChart() {
             onMouseLeave={() => setHovered(null)}
             style={{
               display: "flex", alignItems: "center", gap: 5,
-              fontSize: "0.68rem", color: hovered === i ? "#6c63ff" : "rgba(255,255,255,0.5)",
+              fontSize: "0.68rem", color: hovered === i ? "var(--accent)" : "var(--muted)",
               cursor: "pointer", transition: "color 0.2s",
               fontWeight: hovered === i ? 700 : 400,
             }}
@@ -191,7 +191,7 @@ function RadarChart() {
               background: hovered === i ? "#ff6584" : "#6c63ff",
               transition: "background 0.2s",
             }} />
-            {d.label} <span style={{ color: hovered === i ? "#ff6584" : "rgba(255,255,255,0.3)" }}>{d.value}%</span>
+            {d.label} <span style={{ color: hovered === i ? "var(--accent2)" : "var(--muted)", opacity: 0.7 }}>{d.value}%</span>
           </div>
         ))}
       </div>
