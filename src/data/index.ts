@@ -226,3 +226,107 @@ export const recommendations = [
     author: "Collaborator · Startup Venture",
   },
 ]
+
+export const caseStudies: Record<string, {
+  problem: string
+  solution: string
+  architecture: string[]
+  metrics: { label: string; value: string }[]
+  challenges: string[]
+}> = {
+  "canopycare": {
+    problem: "Canopy cleaning businesses in the UK manage bookings via phone and email, leading to missed appointments, no-shows, and zero digital presence. There was no affordable booking SaaS tailored to this niche.",
+    solution: "Built a full-stack SaaS with a 4-step booking wizard, live slot calendar, budget-to-package quote engine, Cloudinary photo uploads, JWT auth, admin panel with revenue reports, and automated 24-hour cancellation enforcement.",
+    architecture: [
+      "React 18 + Vite frontend deployed on Vercel",
+      "Node.js + Express REST API deployed on Render",
+      "PostgreSQL on Supabase with Prisma ORM",
+      "JWT authentication with role-based access (admin/customer)",
+      "Cloudinary for customer photo uploads",
+      "Resend for transactional email notifications",
+      "Cloudflare subdomain: canopycare.contentforge.net",
+    ],
+    metrics: [
+      { label: "Booking Steps", value: "4" },
+      { label: "Time to Book", value: "<3 min" },
+      { label: "Monthly Cost", value: "£0" },
+      { label: "Uptime", value: "99%" },
+    ],
+    challenges: [
+      "Preventing double-bookings using Prisma transactions with atomic slot locking",
+      "CORS configuration across Render, Vercel, and custom Cloudflare subdomain",
+      "Render free tier cold starts — first request takes 30s after inactivity",
+    ],
+  },
+  "contentforge": {
+    problem: "Content creators and marketers waste hours repurposing YouTube videos into blog posts, LinkedIn articles, and social content. No tool combined transcript extraction, AI writing, brand voice, and deep research in one pipeline.",
+    solution: "Built a 6-agent LangChain pipeline (Transcript → Writer → QA → BrandVault → DeepResearch → Competitor) that transforms YouTube URLs into 27-page research reports and platform-specific content with Stripe billing.",
+    architecture: [
+      "FastAPI backend on Railway with WebSocket for real-time agent streaming",
+      "React + Vite frontend on Vercel",
+      "LangChain multi-agent pipeline with 6 specialised agents",
+      "Webshare residential proxy to bypass YouTube IP blocking on Railway",
+      "Stripe billing with webhook pipeline (Starter/Pro/Agency tiers)",
+      "WeasyPrint + python-docx for PDF and Word exports",
+      "APScheduler for auto-publisher scheduler",
+    ],
+    metrics: [
+      { label: "Agents", value: "6" },
+      { label: "Report Pages", value: "27+" },
+      { label: "Platforms", value: "6" },
+      { label: "Export Formats", value: "PDF + DOCX" },
+    ],
+    challenges: [
+      "YouTube IP blocking on Railway resolved via Webshare residential proxy rotation",
+      "WebSocket stability — implemented reconnection logic and heartbeat pings",
+      "Agent pipeline completing with empty results — fixed with retry logic and fallback prompts",
+    ],
+  },
+  "enterprise-saas": {
+    problem: "Enterprise clients need white-label SaaS platforms with multi-tenant isolation, subscription billing, and role-based access — but existing solutions cost thousands per month.",
+    solution: "Built a headless enterprise platform with 4 vertical packages (Agency, Commerce, Enterprise, Franchise), Auth0 v4 authentication, Stripe subscriptions, Cloudflare R2 storage, Upstash Redis rate limiting, and Sentry monitoring.",
+    architecture: [
+      "Next.js 15 with App Router, TypeScript, and server components",
+      "Prisma ORM with PostgreSQL on Railway",
+      "Auth0 v4 for enterprise SSO and RBAC",
+      "Stripe subscriptions with full webhook pipeline",
+      "Cloudflare R2 for asset storage (S3-compatible)",
+      "Upstash Redis for rate limiting",
+      "Sentry for error monitoring and performance tracing",
+    ],
+    metrics: [
+      { label: "Vertical Packages", value: "4" },
+      { label: "Auth Provider", value: "Auth0 v4" },
+      { label: "Storage", value: "Cloudflare R2" },
+      { label: "Monitoring", value: "Sentry" },
+    ],
+    challenges: [
+      "PowerShell file encoding issues — required System.IO.File::WriteAllText with UTF8 no-BOM",
+      "Prisma migrations run against public Railway URL — not localhost",
+      "TypeScript server restarts needed to resolve stale type errors after schema changes",
+    ],
+  },
+  "knn-heart": {
+    problem: "Heart disease is the leading cause of death globally. Early prediction using patient data could save lives but requires ML expertise most clinicians lack.",
+    solution: "Built a full ML pipeline comparing KNN, linear regression, and Bayesian classifier on a genomic heart disease dataset, with complete EDA, feature engineering, cross-validation, and a live Streamlit deployment.",
+    architecture: [
+      "Python + scikit-learn for ML pipeline",
+      "Pandas + NumPy for data processing and feature engineering",
+      "Matplotlib + Seaborn for EDA visualisation",
+      "K-Nearest Neighbours as primary classifier",
+      "Bayesian classifier for probabilistic comparison",
+      "Streamlit for live web deployment",
+    ],
+    metrics: [
+      { label: "Dataset", value: "Genomic" },
+      { label: "Models Compared", value: "3" },
+      { label: "Deployment", value: "Streamlit" },
+      { label: "Live URL", value: "Available" },
+    ],
+    challenges: [
+      "Class imbalance in genomic dataset — addressed with SMOTE oversampling",
+      "Feature selection: correlation matrix + recursive feature elimination",
+      "Cross-validation: 5-fold stratified to prevent data leakage",
+    ],
+  },
+}

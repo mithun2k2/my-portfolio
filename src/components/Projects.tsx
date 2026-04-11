@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { projects } from "@/data"
+import CaseStudyModal from "./CaseStudyModal"
 
 const statusStyles: Record<string, { bg: string; color: string }> = {
   live: { bg: "#0f2d1f", color: "var(--accent3)" },
@@ -88,6 +89,7 @@ function StatusDot({ projectId, isLive }: { projectId: string; isLive: boolean }
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState<Filter>("All")
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
 
   const filtered = projects.filter((p) => {
     if (activeFilter === "All") return true
@@ -99,6 +101,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="section-wrapper">
+      <CaseStudyModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       <p className="section-label">Portfolio</p>
       <h2 className="section-title">Projects</h2>
       <p className="section-sub">
@@ -154,6 +157,7 @@ export default function Projects() {
                 transition={{ duration: 0.4, delay: i * 0.05 }}
                 whileHover={{ y: -8, borderColor: "var(--accent)" }}
                 viewport={{ once: true }}
+                onClick={() => setSelectedProject(project)}
                 style={{
                   background: "var(--surface)",
                   border: "1px solid var(--border)",
