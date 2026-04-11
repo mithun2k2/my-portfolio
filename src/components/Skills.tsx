@@ -30,10 +30,10 @@ function RadarChart() {
     return () => observer.disconnect()
   }, [])
 
-  const size = 280
+  const size = 320
   const cx = size / 2
   const cy = size / 2
-  const maxR = 110
+  const maxR = 105
   const levels = 5
   const n = radarData.length
 
@@ -132,7 +132,7 @@ function RadarChart() {
 
         {/* Labels */}
         {radarData.map((d, i) => {
-          const labelR = maxR + 22
+          const labelR = maxR + 28
           const pos = toXY(i, labelR)
           const isHovered = hovered === i
           return (
