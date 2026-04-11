@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import ParticleBackground from "./ParticleBackground"
 
 const floatingChips = [
   { label: "FastAPI + LangGraph", color: "var(--accent3)", top: "15%", right: "-5%", delay: 0.6 },
@@ -12,8 +13,9 @@ export default function Hero() {
   return (
     <section
       id="top"
-      style={{ maxWidth: 1100, margin: "0 auto", padding: "5rem 2rem 4rem" }}
+      style={{ maxWidth: 1100, margin: "0 auto", padding: "5rem 2rem 4rem", position: "relative" }}
     >
+      <ParticleBackground />
       <div
         style={{
           display: "grid",
