@@ -238,16 +238,6 @@ export default function CaseStudyModal({
                     ↗ View Live
                   </a>
                 )}
-                {project.github && (
-                  <a href={project.github} target="_blank" rel="noopener noreferrer"
-                    style={{
-                      border: "1px solid var(--border)", color: "var(--text)",
-                      padding: "0.6rem 1.4rem", borderRadius: 10,
-                      fontWeight: 600, fontSize: "0.875rem", textDecoration: "none",
-                    }}>
-                    ⌥ GitHub
-                  </a>
-                )}
               </div>
             </div>
           </motion.div>
