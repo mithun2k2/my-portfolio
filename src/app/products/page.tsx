@@ -77,9 +77,9 @@ const products = [
     gradient: "from-[#2d1f05] to-[#4a3010]",
     badge: "✅ Available Now",
     stripeLinks: {
-      Creator: "https://buy.stripe.com/test_fZubJ350A3uB4Srdcn33W05",
-      Growth: "https://buy.stripe.com/test_00w6oJ50AfdjckT3BN33W04",
-      Agency: "https://buy.stripe.com/test_aFafZj9gQ3uBfx55JV33W03",
+      Creator: "https://buy.stripe.com/aFacN71NU2kU2NB7Pl2wU08",
+      Growth: "https://buy.stripe.com/9B67sNcsy3oY73R4D92wU0b",
+      Agency: "https://buy.stripe.com/5kQeVf1NU6Bacob6Lh2wU06",
     },
   },
   {
@@ -130,9 +130,9 @@ const products = [
     gradient: "from-[#0a2010] to-[#0f3520]",
     badge: "✅ Available Now",
     stripeLinks: {
-      Starter: "https://buy.stripe.com/test_eVq14pct2c173On3BN33W02",
-      Store: "https://buy.stripe.com/test_bJecN7fFee9fet18W733W01",
-      Agency: "https://buy.stripe.com/test_bJe9AV64E3uB4Sr2xJ33W00",
+      Starter: "https://buy.stripe.com/bJecN71NU8JifAn4D92wU07",
+      Store: "https://buy.stripe.com/00wbJ364acZy5ZN8Tp2wU09",
+      Agency: "https://buy.stripe.com/eVq00ldwC5x6dsfedJ2wU0a",
     },
   },
 ]
