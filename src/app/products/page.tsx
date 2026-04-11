@@ -108,7 +108,7 @@ const products = [
   },
   {
     id: "ecom-bot",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/shopify/shopify-original.svg",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
     name: "ShopForge AI",
     tagline: "Bulk AI product descriptions for Shopify & WooCommerce",
     description: "Upload your product CSV and get SEO-optimized product descriptions, meta titles, meta descriptions, and alt text generated in bulk. Works with Shopify, WooCommerce, and any e-commerce platform.",
