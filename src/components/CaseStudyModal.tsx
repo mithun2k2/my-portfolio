@@ -68,10 +68,13 @@ export default function CaseStudyModal({
             transition={{ duration: 0.25, ease: "easeOut" }}
             style={{
               position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              margin: "auto",
               width: "min(760px, 95vw)",
+              height: "fit-content",
               maxHeight: "88vh",
               overflowY: "auto",
               background: "var(--bg)",
