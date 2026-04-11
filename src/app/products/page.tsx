@@ -77,9 +77,9 @@ const products = [
     gradient: "from-[#2d1f05] to-[#4a3010]",
     badge: "✅ Available Now",
     stripeLinks: {
-      Creator: "https://buy.stripe.com/placeholder-creator",
-      Growth: "https://buy.stripe.com/placeholder-growth",
-      Agency: "https://buy.stripe.com/placeholder-agency",
+      Creator: "https://buy.stripe.com/test_fZubJ350A3uB4Srdcn33W05",
+      Growth: "https://buy.stripe.com/test_00w6oJ50AfdjckT3BN33W04",
+      Agency: "https://buy.stripe.com/test_aFafZj9gQ3uBfx55JV33W03",
     },
   },
   {
@@ -121,18 +121,18 @@ const products = [
       "Multi-language support",
     ],
     plans: [
-      { name: "Store", price: 29, period: "mo", requests: "500 products/mo", highlight: false },
-      { name: "Growth", price: 59, period: "mo", requests: "2,000 products/mo", highlight: true },
-      { name: "Agency", price: 129, period: "mo", requests: "Unlimited products", highlight: false },
+      { name: "Starter", price: 29, period: "mo", requests: "200 products/mo", highlight: false },
+      { name: "Store", price: 69, period: "mo", requests: "2,000 products/mo", highlight: true },
+      { name: "Agency", price: 149, period: "mo", requests: "Unlimited products", highlight: false },
     ],
     status: "buy",
     color: "#43e97b",
     gradient: "from-[#0a2010] to-[#0f3520]",
     badge: "✅ Available Now",
     stripeLinks: {
-      Store: "https://buy.stripe.com/placeholder-store",
-      Growth: "https://buy.stripe.com/placeholder-growth2",
-      Agency: "https://buy.stripe.com/placeholder-agency2",
+      Starter: "https://buy.stripe.com/test_eVq14pct2c173On3BN33W02",
+      Store: "https://buy.stripe.com/test_bJecN7fFee9fet18W733W01",
+      Agency: "https://buy.stripe.com/test_bJe9AV64E3uB4Sr2xJ33W00",
     },
   },
 ]
