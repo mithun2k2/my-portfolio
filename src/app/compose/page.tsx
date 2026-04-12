@@ -22,6 +22,13 @@ export default function Compose() {
   const [scheduleTime, setScheduleTime] = useState("")
   const [step, setStep]             = useState<"compose"|"review"|"schedule">("compose")
   const [editingVariant, setEditingVariant] = useState<string|null>(null)
+  const [usageCount, setUsageCount] = useState(() => {
+    if (typeof window !== "undefined") {
+      return parseInt(localStorage.getItem("sf_usage") || "0")
+    }
+    return 0
+  })
+  const DEMO_LIMIT = 3
 
   const togglePlatform = (id: string) => {
     setPlatforms(prev =>
@@ -31,6 +38,7 @@ export default function Compose() {
 
   const repurpose = async () => {
     if (!content.trim() || platforms.length === 0) return
+    if (usageCount >= DEMO_LIMIT) return
     setLoading(true)
     try {
       const res = await fetch("https://scheduleforge-ai.onrender.com/repurpose/", {
@@ -42,6 +50,9 @@ export default function Compose() {
       setVariants(data.variants)
       setActiveTab(platforms[0])
       setStep("review")
+      const newCount = usageCount + 1
+      setUsageCount(newCount)
+      if (typeof window !== "undefined") localStorage.setItem("sf_usage", String(newCount))
     } catch (e) {
       alert("Error connecting to backend. Is it running?")
     } finally {
@@ -110,6 +121,29 @@ export default function Compose() {
         <a href="/dashboard" style={{ fontSize: 13, color: "#6b7a99", textDecoration: "none" }}>Dashboard →</a>
       </nav>
 
+      {/* Demo banner */}
+      {usageCount < DEMO_LIMIT ? (
+        <div style={{ background: "rgba(249,115,22,0.08)", borderBottom: "1px solid rgba(249,115,22,0.2)", padding: "10px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#f97316" }}>
+            <span>⚡</span>
+            <span>Free demo — <strong>{DEMO_LIMIT - usageCount} repurpose{DEMO_LIMIT - usageCount !== 1 ? "s" : ""}</strong> remaining</span>
+          </div>
+          <a href="/products" style={{ fontSize: 12, fontWeight: 600, color: "#fff", background: "#f97316", padding: "5px 14px", borderRadius: 6, textDecoration: "none" }}>
+            Upgrade for unlimited →
+          </a>
+        </div>
+      ) : (
+        <div style={{ background: "rgba(239,68,68,0.08)", borderBottom: "1px solid rgba(239,68,68,0.2)", padding: "16px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 600, color: "#f87171", marginBottom: 4 }}>🔒 Demo limit reached</div>
+            <div style={{ fontSize: 13, color: "#6b7a99" }}>You've used all 3 free repurposes. Subscribe to get unlimited access.</div>
+          </div>
+          <a href="/products" style={{ fontSize: 13, fontWeight: 700, color: "#fff", background: "linear-gradient(135deg, #f97316, #f59e0b)", padding: "10px 24px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap" }}>
+            ⚡ Subscribe Now
+          </a>
+        </div>
+      )}
+
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px" }}>
 
         {/* ── STEP 1: COMPOSE ── */}
@@ -172,12 +206,12 @@ export default function Compose() {
             {/* Repurpose button */}
             <button
               onClick={repurpose}
-              disabled={loading || !content.trim() || platforms.length === 0}
+              disabled={loading || !content.trim() || platforms.length === 0 || usageCount >= DEMO_LIMIT}
               style={{
-                background: loading ? "rgba(249,115,22,0.4)" : "#f97316",
+                background: (loading || usageCount >= DEMO_LIMIT) ? "rgba(249,115,22,0.4)" : "#f97316",
                 color: "#fff", border: "none", borderRadius: 10,
                 padding: "14px 32px", fontSize: 15, fontWeight: 600,
-                cursor: loading ? "not-allowed" : "pointer",
+                cursor: (loading || usageCount >= DEMO_LIMIT) ? "not-allowed" : "pointer",
                 display: "flex", alignItems: "center", gap: 10,
                 transition: "all 0.2s ease",
               }}
