@@ -74,11 +74,55 @@ export default function Navbar() {
           display: flex;
           align-items: center;
           gap: 0.3rem;
+          cursor: pointer;
+          border: none;
+          position: relative;
         }
         .launch-btn:hover {
           box-shadow: 0 0 20px rgba(249,115,22,0.7), 0 0 40px rgba(249,115,22,0.3);
           transform: translateY(-2px);
         }
+        .launch-dropdown {
+          position: absolute;
+          top: calc(100% + 10px);
+          right: 0;
+          background: rgba(10,10,20,0.98);
+          border: 1px solid rgba(249,115,22,0.25);
+          border-radius: 12px;
+          padding: 8px;
+          min-width: 220px;
+          display: none;
+          flex-direction: column;
+          gap: 2px;
+          box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+          backdrop-filter: blur(20px);
+          z-index: 200;
+        }
+        .launch-dropdown.open { display: flex; }
+        .drop-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 12px;
+          border-radius: 8px;
+          text-decoration: none;
+          color: #e8edf5;
+          font-size: 0.82rem;
+          font-weight: 500;
+          transition: background 0.2s;
+          gap: 8px;
+        }
+        .drop-item:hover { background: rgba(249,115,22,0.1); }
+        .drop-badge {
+          font-size: 0.65rem;
+          font-weight: 600;
+          padding: 2px 7px;
+          border-radius: 100px;
+          white-space: nowrap;
+        }
+        .badge-live { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+        .badge-wait { background: rgba(249,115,22,0.15); color: #f97316; border: 1px solid rgba(249,115,22,0.3); }
+        .badge-soon { background: rgba(99,179,237,0.15); color: #63b3ed; border: 1px solid rgba(99,179,237,0.3); }
         .hire-btn {
           background: linear-gradient(135deg, #6c63ff, #ff6584);
           color: #fff;
@@ -140,7 +184,33 @@ export default function Navbar() {
             <div style={{ width: "0.75rem" }} />
             <ThemeToggle />
             <div style={{ width: "0.75rem" }} />
-            <a href="/compose" className="launch-btn">⚡ Launch App</a>
+            <div style={{ position: "relative" }} onMouseEnter={e => (e.currentTarget.querySelector('.launch-dropdown') as HTMLElement)?.classList.add('open')} onMouseLeave={e => (e.currentTarget.querySelector('.launch-dropdown') as HTMLElement)?.classList.remove('open')}>
+              <button className="launch-btn">
+                ⚡ Launch App <span style={{ fontSize: "0.65rem", opacity: 0.8 }}>▾</span>
+              </button>
+              <div className="launch-dropdown">
+                <a href="/compose" className="drop-item">
+                  <span>📅 ScheduleForge AI</span>
+                  <span className="drop-badge badge-live">✅ Live</span>
+                </a>
+                <a href="/products" className="drop-item">
+                  <span>🛍️ ShopForge AI</span>
+                  <span className="drop-badge badge-live">✅ Live</span>
+                </a>
+                <a href="/products" className="drop-item">
+                  <span>🔗 LinkedInForge AI</span>
+                  <span className="drop-badge badge-wait">🔥 Waitlist</span>
+                </a>
+                <a href="/products" className="drop-item">
+                  <span>✉️ OutreachForge AI</span>
+                  <span className="drop-badge badge-wait">🔥 Waitlist</span>
+                </a>
+                <a href="/products" className="drop-item">
+                  <span>💬 SupportForge AI</span>
+                  <span className="drop-badge badge-soon">⚡ Soon</span>
+                </a>
+              </div>
+            </div>
             <div style={{ width: "0.5rem" }} />
             <a href="mailto:contact@mhassanmithun.com" className="hire-btn">Hire Me</a>
           </div>
