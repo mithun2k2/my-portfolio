@@ -128,7 +128,7 @@ export default function Compose() {
             <span>⚡</span>
             <span>Free demo — <strong>{DEMO_LIMIT - usageCount} repurpose{DEMO_LIMIT - usageCount !== 1 ? "s" : ""}</strong> remaining</span>
           </div>
-          <a href="/products" style={{ fontSize: 12, fontWeight: 600, color: "#fff", background: "#f97316", padding: "5px 14px", borderRadius: 6, textDecoration: "none" }}>
+          <a href="/products#scheduler-bot" style={{ fontSize: 12, fontWeight: 600, color: "#fff", background: "#f97316", padding: "5px 14px", borderRadius: 6, textDecoration: "none" }}>
             Upgrade for unlimited →
           </a>
         </div>
@@ -138,7 +138,7 @@ export default function Compose() {
             <div style={{ fontSize: 15, fontWeight: 600, color: "#f87171", marginBottom: 4 }}>🔒 Demo limit reached</div>
             <div style={{ fontSize: 13, color: "#6b7a99" }}>You've used all 3 free repurposes. Subscribe to get unlimited access.</div>
           </div>
-          <a href="/products" style={{ fontSize: 13, fontWeight: 700, color: "#fff", background: "linear-gradient(135deg, #f97316, #f59e0b)", padding: "10px 24px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap" }}>
+          <a href="/products#scheduler-bot" style={{ fontSize: 13, fontWeight: 700, color: "#fff", background: "linear-gradient(135deg, #f97316, #f59e0b)", padding: "10px 24px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap" }}>
             ⚡ Subscribe Now
           </a>
         </div>
