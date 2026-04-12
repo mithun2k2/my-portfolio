@@ -60,6 +60,25 @@ export default function Navbar() {
         .nl-contact::after { background: #00d2ff; }
         .nl-contact:hover::after { box-shadow: 0 0 8px #00d2ff, 0 0 20px rgba(0,210,255,0.6); }
 
+        .launch-btn {
+          background: linear-gradient(135deg, #f97316, #f59e0b);
+          color: #fff;
+          padding: 0.45rem 1.1rem;
+          border-radius: 8px;
+          font-size: 0.82rem;
+          font-weight: 700;
+          text-decoration: none;
+          transition: all 0.25s;
+          box-shadow: 0 0 12px rgba(249,115,22,0.3);
+          font-family: 'Syne', sans-serif;
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+        }
+        .launch-btn:hover {
+          box-shadow: 0 0 20px rgba(249,115,22,0.7), 0 0 40px rgba(249,115,22,0.3);
+          transform: translateY(-2px);
+        }
         .hire-btn {
           background: linear-gradient(135deg, #6c63ff, #ff6584);
           color: #fff;
@@ -121,6 +140,8 @@ export default function Navbar() {
             <div style={{ width: "0.75rem" }} />
             <ThemeToggle />
             <div style={{ width: "0.75rem" }} />
+            <a href="/compose" className="launch-btn">⚡ Launch App</a>
+            <div style={{ width: "0.5rem" }} />
             <a href="mailto:contact@mhassanmithun.com" className="hire-btn">Hire Me</a>
           </div>
         </div>
