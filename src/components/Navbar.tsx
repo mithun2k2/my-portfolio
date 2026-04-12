@@ -6,6 +6,7 @@ import ThemeToggle from "./ThemeToggle"
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [dropOpen, setDropOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -184,28 +185,28 @@ export default function Navbar() {
             <div style={{ width: "0.75rem" }} />
             <ThemeToggle />
             <div style={{ width: "0.75rem" }} />
-            <div style={{ position: "relative" }} onMouseEnter={e => (e.currentTarget.querySelector('.launch-dropdown') as HTMLElement)?.classList.add('open')} onMouseLeave={e => (e.currentTarget.querySelector('.launch-dropdown') as HTMLElement)?.classList.remove('open')}>
-              <button className="launch-btn">
+            <div style={{ position: "relative" }}>
+              <button className="launch-btn" onClick={() => setDropOpen(o => !o)}>
                 ⚡ Launch App <span style={{ fontSize: "0.65rem", opacity: 0.8 }}>▾</span>
               </button>
-              <div className="launch-dropdown">
-                <a href="/compose" className="drop-item">
+              <div className={`launch-dropdown${dropOpen ? " open" : ""}`}>
+                <a href="/compose" className="drop-item" onClick={() => setDropOpen(false)}>
                   <span>📅 ScheduleForge AI</span>
                   <span className="drop-badge badge-live">✅ Live</span>
                 </a>
-                <a href="/products" className="drop-item">
+                <a href="/products" className="drop-item" onClick={() => setDropOpen(false)}>
                   <span>🛍️ ShopForge AI</span>
                   <span className="drop-badge badge-live">✅ Live</span>
                 </a>
-                <a href="/products" className="drop-item">
+                <a href="/products" className="drop-item" onClick={() => setDropOpen(false)}>
                   <span>🔗 LinkedInForge AI</span>
                   <span className="drop-badge badge-wait">🔥 Waitlist</span>
                 </a>
-                <a href="/products" className="drop-item">
+                <a href="/products" className="drop-item" onClick={() => setDropOpen(false)}>
                   <span>✉️ OutreachForge AI</span>
                   <span className="drop-badge badge-wait">🔥 Waitlist</span>
                 </a>
-                <a href="/products" className="drop-item">
+                <a href="/products" className="drop-item" onClick={() => setDropOpen(false)}>
                   <span>💬 SupportForge AI</span>
                   <span className="drop-badge badge-soon">⚡ Soon</span>
                 </a>
