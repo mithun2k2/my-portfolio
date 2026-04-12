@@ -89,10 +89,10 @@ export default function Compose() {
 
       {/* Top nav */}
       <nav style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "0 32px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between", background: "#0c1120" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <a href="https://mhassanmithun.com" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
           <div style={{ width: 28, height: 28, borderRadius: 8, background: "#f97316", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>⚡</div>
           <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: "#fff" }}>ScheduleForge</span>
-        </div>
+        </a>
         <div style={{ display: "flex", gap: 8 }}>
           {["compose","review","schedule"].map((s, i) => (
             <div key={s} style={{ display: "flex", alignItems: "center", gap: 6 }}>
