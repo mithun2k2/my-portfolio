@@ -6,7 +6,7 @@ const PLATFORMS = [
   {
     id: "linkedin", label: "LinkedIn", color: "#0077b5", icon: "in",
     desc: "Post articles, updates and connect with professionals.",
-    authUrl: "http://localhost:8000/auth/linkedin",
+    authUrl: "https://scheduleforge-ai.onrender.com/auth/linkedin",
   },
   {
     id: "twitter", label: "Twitter / X", color: "#000", icon: "𝕏",

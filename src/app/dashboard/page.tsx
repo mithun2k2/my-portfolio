@@ -28,7 +28,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("http://localhost:8000/posts/1")
+    fetch("https://scheduleforge-ai.onrender.com/posts/1")
       .then(r => r.json())
       .then(data => { setPosts(data); setLoading(false) })
       .catch(() => setLoading(false))

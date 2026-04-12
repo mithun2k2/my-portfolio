@@ -33,7 +33,7 @@ export default function Compose() {
     if (!content.trim() || platforms.length === 0) return
     setLoading(true)
     try {
-      const res = await fetch("http://localhost:8000/repurpose/", {
+      const res = await fetch("https://scheduleforge-ai.onrender.com/repurpose/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ master_content: content, platforms }),
@@ -53,7 +53,7 @@ export default function Compose() {
     if (!scheduleTime) return
     setScheduling(true)
     try {
-      const postRes = await fetch("http://localhost:8000/posts/", {
+      const postRes = await fetch("https://scheduleforge-ai.onrender.com/posts/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -64,7 +64,7 @@ export default function Compose() {
         }),
       })
       const post = await postRes.json()
-      await fetch("http://localhost:8000/schedule/", {
+      await fetch("https://scheduleforge-ai.onrender.com/schedule/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
