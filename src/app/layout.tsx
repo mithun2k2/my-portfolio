@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import PageTransition from "@/components/PageTransition"
+import { AuthProvider } from "@/context/AuthContext"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mhassanmithun.com"),
@@ -98,7 +99,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <AuthProvider>
         <PageTransition>{children}</PageTransition>
+        </AuthProvider>
       </body>
     </html>
   )
