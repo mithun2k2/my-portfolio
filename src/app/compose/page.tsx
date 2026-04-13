@@ -125,7 +125,6 @@ export default function Compose() {
           <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: "#fff" }}>ScheduleForge</span>
         </a>
         <div style={{ display: "flex", gap: 8 }}>
-        <div style={{ display: "flex", gap: 8 }}>
           {["compose","review","schedule"].map((s, i) => (
             <div key={s} style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <div style={{
