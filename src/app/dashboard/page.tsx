@@ -28,9 +28,16 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("https://scheduleforge-ai.onrender.com/posts/1")
-      .then(r => r.json())
-      .then(data => { setPosts(data); setLoading(false) })
+    const token = localStorage.getItem("sf_token")
+    if (!token) { setLoading(false); return }
+    fetch(`https://scheduleforge-ai.onrender.com/auth/me?token=${token}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(user => {
+        if (!user) { setLoading(false); return }
+        return fetch(`https://scheduleforge-ai.onrender.com/posts/${user.id}`)
+          .then(r => r.json())
+          .then(data => { setPosts(Array.isArray(data) ? data : []); setLoading(false) })
+      })
       .catch(() => setLoading(false))
   }, [])
 
@@ -44,10 +51,10 @@ export default function Dashboard() {
   return (
     <div style={{ minHeight: "100vh", background: "#080c14", fontFamily: "'DM Sans', sans-serif", color: "#e8edf5" }}>
       <nav style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "0 32px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between", background: "#0c1120" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <a href="https://mhassanmithun.com" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
           <div style={{ width: 28, height: 28, borderRadius: 8, background: "#f97316", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>⚡</div>
           <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: "#fff" }}>ScheduleForge</span>
-        </div>
+        </a>
         <div style={{ display: "flex", gap: 16, fontSize: 14 }}>
           <Link href="/compose" style={{ color: "#6b7a99", textDecoration: "none" }}>Compose</Link>
           <Link href="/calendar" style={{ color: "#6b7a99", textDecoration: "none" }}>Calendar</Link>
