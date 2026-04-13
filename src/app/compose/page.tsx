@@ -1,6 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+
+const API = "https://scheduleforge-ai.onrender.com"
 
 const PLATFORMS = [
   { id: "linkedin",  label: "LinkedIn",  color: "#0077b5", icon: "in" },
@@ -12,6 +15,7 @@ const PLATFORMS = [
 type Variants = Record<string, string>
 
 export default function Compose() {
+  const router = useRouter()
   const [content, setContent]       = useState("")
   const [platforms, setPlatforms]   = useState<string[]>(["linkedin", "twitter", "instagram", "facebook"])
   const [variants, setVariants]     = useState<Variants>({})
@@ -28,7 +32,23 @@ export default function Compose() {
     }
     return 0
   })
+  const [user, setUser] = useState<{name: string, email: string, plan: string} | null>(null)
   const DEMO_LIMIT = 3
+
+  useEffect(() => {
+    const token = localStorage.getItem("sf_token")
+    if (token) {
+      fetch(`${API}/auth/me?token=${token}`)
+        .then(r => r.ok ? r.json() : null)
+        .then(data => { if (data) setUser(data) })
+        .catch(() => {})
+    }
+  }, [])
+
+  const logout = () => {
+    localStorage.removeItem("sf_token")
+    router.push("/login")
+  }
 
   const togglePlatform = (id: string) => {
     setPlatforms(prev =>
@@ -105,6 +125,7 @@ export default function Compose() {
           <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: "#fff" }}>ScheduleForge</span>
         </a>
         <div style={{ display: "flex", gap: 8 }}>
+        <div style={{ display: "flex", gap: 8 }}>
           {["compose","review","schedule"].map((s, i) => (
             <div key={s} style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <div style={{
@@ -118,7 +139,23 @@ export default function Compose() {
             </div>
           ))}
         </div>
-        <a href="/dashboard" style={{ fontSize: 13, color: "#6b7a99", textDecoration: "none" }}>Dashboard →</a>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {user && (
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #f97316, #f59e0b)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff" }}>
+                {user.name?.charAt(0).toUpperCase()}
+              </div>
+              <span style={{ fontSize: 13, color: "#e8edf5", fontWeight: 500 }}>{user.name}</span>
+              {user.plan !== "free" && <span style={{ fontSize: 10, background: "rgba(249,115,22,0.2)", color: "#f97316", border: "1px solid rgba(249,115,22,0.3)", borderRadius: 4, padding: "2px 6px", fontWeight: 600 }}>{user.plan.toUpperCase()}</span>}
+            </div>
+          )}
+          <a href="/dashboard" style={{ fontSize: 13, color: "#6b7a99", textDecoration: "none" }}>Dashboard →</a>
+          {user ? (
+            <button onClick={logout} style={{ fontSize: 12, color: "#6b7a99", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "5px 12px", cursor: "pointer" }}>Logout</button>
+          ) : (
+            <a href="/login" style={{ fontSize: 12, color: "#f97316", background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.2)", borderRadius: 6, padding: "5px 12px", textDecoration: "none", fontWeight: 600 }}>Sign in</a>
+          )}
+        </div>
       </nav>
 
       {/* Demo banner */}
