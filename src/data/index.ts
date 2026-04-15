@@ -10,7 +10,7 @@ export const projects = [
     tags: ["React", "Vite", "Tailwind", "Node.js", "Express", "Prisma", "PostgreSQL", "Supabase", "Cloudinary", "SendGrid", "Zustand", "JWT"],
     link: "https://canopycare.contentforge.net",
     linkLabel: "canopycare.contentforge.net",
-    github: "https://github.com/mithun2k2/canopycare-frontend",
+    github: null,
   },
   {
     id: "contentforge",
