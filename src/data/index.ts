@@ -23,7 +23,7 @@ export const projects = [
     tags: ["FastAPI", "React", "LangChain", "Stripe", "Railway", "Vercel", "WebSocket", "APScheduler", "WeasyPrint"],
     link: "https://contentforge.net",
     linkLabel: "contentforge.net",
-    github: "https://github.com/mithun2k2/contentforge-ai",
+    github: null,
   },
   {
     id: "bookingforge",
