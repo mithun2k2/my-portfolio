@@ -1,7 +1,7 @@
 export const projects = [
   {
   id: "case-tracking-service",
-  emoji: "⚖️",
+  emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
   gradient: "from-[#0a0f1e] to-[#0d1b3e]",
   title: "Case Tracking Service",
   status: "live",
