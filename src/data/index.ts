@@ -1,5 +1,18 @@
 export const projects = [
   {
+  id: "case-tracking-service",
+  emoji: "⚖️",
+  gradient: "from-[#0a0f1e] to-[#0d1b3e]",
+  title: "Case Tracking Service",
+  status: "live",
+  statusLabel: "Live",
+  desc: "Production-grade Spring Boot microservice modelled on the HMCTS spring-boot-template. Mirrors real HMCTS architecture: Azure Front Door → APIM → AKS → PostgreSQL + Redis. Flyway migrations, JPA optimistic locking, Micrometer metrics, Helm chart with Azure Key Vault secret injection, Terraform, OWASP CVE scanning, and Testcontainers integration tests. Built as a portfolio project for the HMCTS Software Developer (SEO) role.",
+  tags: ["Java 21", "Spring Boot", "PostgreSQL", "Redis", "Flyway", "Helm", "Terraform", "Azure", "Docker", "Kubernetes"],
+  link: "https://github.com/mithun2k2/case-tracking-service",
+  linkLabel: "github.com/mithun2k2/case-tracking-service",
+  github: "https://github.com/mithun2k2/case-tracking-service",
+  },
+  {
     id: "canopycare",
     emoji: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
     gradient: "from-[#0a2010] to-[#0f3520]",
