@@ -3,6 +3,7 @@ import Hero from "@/components/Hero"
 import Skills from "@/components/Skills"
 import Projects from "@/components/Projects"
 import Experience from "@/components/Experience"
+import Resume from "@/components/Resume"
 import Contact from "@/components/Contact"
 import AIChatWidget from "@/components/AIChatWidget"
 import CursorGlow from "@/components/CursorGlow"
@@ -19,6 +20,8 @@ export default function Home() {
       <Projects />
       <div className="divider" />
       <Experience />
+      <div className="divider" />
+      <Resume />
       <div className="divider" />
       <Contact />
       <AIChatWidget />
