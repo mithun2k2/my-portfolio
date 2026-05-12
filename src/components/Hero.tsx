@@ -140,8 +140,8 @@ export default function Hero() {
               GitHub ↗
             </motion.a>
             <motion.a
-              href="/Hassan_CV_2026.pdf"
-              download="Hassan_CV_2026.pdf"
+              href="/Hassan_Mithun.pdf"
+              download="Hassan_Mithun.pdf"
               whileHover={{ borderColor: "var(--accent2)", y: -2 }}
               whileTap={{ scale: 0.97 }}
               style={{
